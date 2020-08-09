@@ -28,11 +28,17 @@ jobs:
       - name: Build
         run: dotnet build -c ${{ matrix.Configuration }} --no-restore
 
-      - name: Test
-        run: dotnet test
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
           name: X4_ComplexCalculator-${{ matrix.Configuration }}-${{ github.sha }}
           path: X4_ComplexCalculator/bin/${{ matrix.Configuration }}/netcoreapp3.1
+
+      - name: Test
+        run: dotnet test --collect:"XPlat Code Coverage" -r artifacts/coverage --no-restore
+
+      - name: Upload test coverage
+        uses: codecov/codecov-action@v1
+        with:
+          directory: artifacts/coverage
+          flags: ${{ matrix.Configuration }}
