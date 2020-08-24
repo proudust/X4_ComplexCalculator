@@ -91,7 +91,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StorageAssign
             _Storages.CollectionChanged += Storages_CollectionChanged;
             _Storages.CollectionPropertyChanged += Storages_CollectionPropertyChanged;
 
-            DBConnection.X4DB.ExecQuery("SELECT TransportTypeID FROM TransportType", (dr, args) =>
+            X4Database.Instance.ExecQuery("SELECT TransportTypeID FROM TransportType", (dr, args) =>
             {
                 _CapacityDict.Add((string)dr["TransportTypeID"], new StorageCapacityInfo());
             });
@@ -233,7 +233,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StorageAssign
                         ret.AllocCount = oldAssign.AllocCount;
                         ret.EditStatus = oldAssign.EditStatus;
                     }
-                    
+
                     return ret;
                 }));
 

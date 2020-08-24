@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -92,7 +92,7 @@ namespace X4_ComplexCalculator.DB.X4DB
 
             var query = $@"SELECT SizeID, Amount FROM Module{equipmentType} WHERE ModuleID = '{moduleID}'";
 
-            DBConnection.X4DB.ExecQuery(query, (dr, args) =>
+            X4Database.Instance.ExecQuery(query, (dr, args) =>
             {
                 var size = Size.Get((string)dr["SizeID"]);
                 _Sizes.Add(size);
@@ -174,7 +174,7 @@ namespace X4_ComplexCalculator.DB.X4DB
         public override int GetHashCode()
         {
             var sb = new StringBuilder();
-            
+
             foreach (var equipmentID in _Equipments.SelectMany(x => x.Value.Select(y => y.EquipmentID).OrderBy(x => x)))
             {
                 sb.Append(equipmentID);
