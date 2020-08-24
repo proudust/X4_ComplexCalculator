@@ -8,7 +8,7 @@ namespace LibX4.FileSystem
     /// <summary>
     /// Modの情報
     /// </summary>
-    class ModInfo
+    public class ModInfo
     {
         /// <summary>
         /// 識別ID

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -187,7 +187,12 @@ Please report the following content to the developer.
                 sw.WriteLine("----------------------------------------------------------------------");
                 sw.WriteLine("Installed mods");
                 sw.WriteLine("----------------------------------------------------------------------");
-                catFile.DumpModInfo(sw);
+                sw.WriteLine("ID\tName\tAuthor\tVersion\tDate\tEnabled\tSave");
+
+                foreach (var info in catFile.GetModInfo())
+                {
+                    sw.WriteLine($"{info.ID}\t{info.Name}\t{info.Author}\t{info.Version}\t{info.Date}\t{info.Enabled}\t{info.Save}");
+                }
             }
         }
     }

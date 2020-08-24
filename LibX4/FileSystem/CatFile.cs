@@ -178,23 +178,10 @@ namespace LibX4.FileSystem
 
 
         /// <summary>
-        /// Modの情報をダンプする
+        /// MOD の情報を取得する
         /// </summary>
-        /// <param name="sw">ダンプ先ストリーム</param>
-        public void DumpModInfo(StreamWriter sw)
-        {
-            if (!_ModInfo.Any())
-            {
-                return;
-            }
-
-            sw.WriteLine("ID\tName\tAuthor\tVersion\tDate\tEnabled\tSave");
-
-            foreach (var info in _ModInfo)
-            {
-                sw.WriteLine($"{info.ID}\t{info.Name}\t{info.Author}\t{info.Version}\t{info.Date}\t{info.Enabled}\t{info.Save}");
-            }
-        }
+        /// <returns>MOD の情報</returns>
+        public IEnumerable<ModInfo> GetModInfo() => _ModInfo;
 
 
         /// <summary>
