@@ -14,7 +14,19 @@ namespace LibX4.Tests
         /// <summary>
         /// UTF-8 の BOM
         /// </summary>
-        private static readonly byte[] Bom = Encoding.UTF8.GetPreamble();
+        private static readonly byte[] Utf8Bom = Encoding.UTF8.GetPreamble();
+
+
+        /// <summary>
+        /// UTF-16 LE の BOM
+        /// </summary>
+        private static readonly byte[] Utf16LEBom = Encoding.Unicode.GetPreamble();
+
+
+        /// <summary>
+        /// UTF-16 BE の BOM
+        /// </summary>
+        private static readonly byte[] Utf16BEBom = Encoding.BigEndianUnicode.GetPreamble();
 
 
         /// <summary>
@@ -50,7 +62,61 @@ namespace LibX4.Tests
         [MemberData(nameof(TestXmls))]
         public void Utf8WithBom(string source)
         {
-            var stream = new MemoryStream(Bom.Concat(Encoding.UTF8.GetBytes(source)).ToArray());
+            var stream = new MemoryStream(Utf8Bom.Concat(Encoding.UTF8.GetBytes(source)).ToArray());
+            XDocumentEx.Load(stream);
+        }
+
+
+        /// <summary>
+        /// UTF-16 LE エンコードされた XML ストリームから読み込める
+        /// </summary>
+        /// <param name="source">テスト用の文字列</param>
+        [Theory]
+        [MemberData(nameof(TastXmls))]
+        public void Utf16LE(string source)
+        {
+            var stream = new MemoryStream(Encoding.Unicode.GetBytes(source));
+            XDocumentEx.Load(stream);
+        }
+
+
+        /// <summary>
+        /// UTF-16 LE with BOM エンコードされた XML ストリームから読み込める
+        /// </summary>
+        /// <param name="source">テスト用の文字列</param>
+        [Theory]
+        [MemberData(nameof(TastXmls))]
+        public void Utf16LEWithBom(string source)
+        {
+            var bytes = Encoding.Unicode.GetBytes(source);
+            var stream = new MemoryStream(Utf16LEBom.Concat(bytes).ToArray());
+            XDocumentEx.Load(stream);
+        }
+
+
+        /// <summary>
+        /// UTF-16 BE エンコードされた XML ストリームから読み込める
+        /// </summary>
+        /// <param name="source">テスト用の文字列</param>
+        [Theory]
+        [MemberData(nameof(TastXmls))]
+        public void Utf16BE(string source)
+        {
+            var stream = new MemoryStream(Encoding.BigEndianUnicode.GetBytes(source));
+            XDocumentEx.Load(stream);
+        }
+
+
+        /// <summary>
+        /// UTF-16 BE with BOM エンコードされた XML ストリームから読み込める
+        /// </summary>
+        /// <param name="source">テスト用の文字列</param>
+        [Theory]
+        [MemberData(nameof(TastXmls))]
+        public void Utf16BEWithBom(string source)
+        {
+            var bytes = Encoding.BigEndianUnicode.GetBytes(source);
+            var stream = new MemoryStream(Utf16BEBom.Concat(bytes).ToArray());
             XDocumentEx.Load(stream);
         }
     }
