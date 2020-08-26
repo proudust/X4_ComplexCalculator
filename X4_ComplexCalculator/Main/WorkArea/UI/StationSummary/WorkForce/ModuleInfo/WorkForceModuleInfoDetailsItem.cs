@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using System;
 using X4_ComplexCalculator.DB.X4DB;
 
@@ -96,7 +96,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.ModuleI
         public WorkForceModuleInfoDetailsItem(string moduleID, long moduleCount, long maxWorkers, long workersCapacity)
         {
             ModuleID = moduleID;
-            ModuleName = Module.Get(moduleID)?.Name ?? throw new ArgumentException($"Invalid module ID. ({moduleID})", nameof(moduleID));
+            ModuleName = ModuleTable.Get(moduleID)?.Name ?? throw new ArgumentException($"Invalid module ID. ({moduleID})", nameof(moduleID));
             _ModuleCount = moduleCount;
             MaxWorkers = maxWorkers;
             WorkersCapacity = workersCapacity;

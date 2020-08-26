@@ -129,7 +129,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport
                 moduleID = (string)dr["ModuleID"];
             });
 
-            var module = Module.Get(moduleID);
+            var module = ModuleTable.Get(moduleID);
             if (module == null)
             {
                 return null;
@@ -151,7 +151,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport
             Name = elm.Attribute("name").Value;
 
             Module = module;
-            Equipment = ModuleEquipment.Get(module.ModuleID);
+            Equipment = ModuleEquipmentTable.Get(module.ModuleID);
 
             AddEquipment(elm.XPathSelectElements("groups/shields"), Equipment.Shield);
             AddEquipment(elm.XPathSelectElements("groups/turrets"), Equipment.Turret);
@@ -167,7 +167,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport
 
                     SettingDatabase.Instance.ExecQuery($"SELECT EquipmentID FROM ModulePresetsEquipment WHERE ModuleID = '{module.ModuleID}' AND PresetID = {(long)dr1["PresetID"]}", (dr2, __) =>
                     {
-                        var eqp = DB.X4DB.Equipment.Get((string)dr2["EquipmentID"]);
+                        var eqp = EquipmentTable.Get((string)dr2["EquipmentID"]);
                         if (eqp != null)
                         {
                             eq.Add(eqp);
@@ -199,7 +199,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport
                 var max = int.Parse(elm.Attribute("exact")?.Value ?? "1");
                 for (var cnt = 0; cnt < max; cnt++)
                 {
-                    var eqp = DB.X4DB.Equipment.Get(id);
+                    var eqp = EquipmentTable.Get(id);
                     if (eqp != null)
                     {
                         manager.AddEquipment(eqp);
@@ -239,9 +239,9 @@ WHERE
                 var param = new SQLiteCommandParameters(4);
                 foreach (var eqp in Equipment.GetAllEquipment())
                 {
-                    param.Add("moduleID",      DbType.String, Module.ModuleID);
-                    param.Add("presetID",      DbType.Int32 , id);
-                    param.Add("equipmentID",   DbType.String, eqp.EquipmentID);
+                    param.Add("moduleID", DbType.String, Module.ModuleID);
+                    param.Add("presetID", DbType.Int32, id);
+                    param.Add("equipmentID", DbType.String, eqp.EquipmentID);
                     param.Add("equipmentType", DbType.String, eqp.EquipmentType.EquipmentTypeID);
                 }
                 SettingDatabase.Instance.ExecQuery($"INSERT INTO ModulePresetsEquipment(ModuleID, PresetID, EquipmentID, EquipmentType) VALUES(:moduleID, :presetID, :equipmentID, :equipmentType)", param);

@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+using Prism.Commands;
 using System;
 using System.Linq;
 using System.Text;
@@ -174,7 +174,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid
             Module = module;
             ModuleCount = moduleCount;
             EditEquipmentCommand = new DelegateCommand(EditEquipment);
-            ModuleEquipment = ModuleEquipment.Get(Module.ModuleID);
+            ModuleEquipment = ModuleEquipmentTable.Get(Module.ModuleID);
 
             _SelectedMethod = selectedMethod ?? Module.ModuleProductions[0];
         }
@@ -186,8 +186,8 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid
         /// <param name="element">モジュール情報が記載されたxml</param>
         public ModulesGridItem(XElement element)
         {
-            Module = Module.Get(element.Attribute("id").Value) ?? throw new ArgumentException("Invalid XELement.", nameof(element));
-            ModuleEquipment = ModuleEquipment.Get(Module.ModuleID);
+            Module = ModuleTable.Get(element.Attribute("id").Value) ?? throw new ArgumentException("Invalid XELement.", nameof(element));
+            ModuleEquipment = ModuleEquipmentTable.Get(Module.ModuleID);
 
             ModuleCount = long.Parse(element.Attribute("count").Value);
             SelectedMethod = Module.ModuleProductions.Where(x => x.Method == element.Attribute("method").Value).FirstOrDefault();
@@ -201,7 +201,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid
             // タレットとシールドを追加
             string[] types = { "turrets", "shields" };
             var equipments = types.Select(x => element.XPathSelectElement(x).Elements())
-                                  .SelectMany(x => x.Select(y => Equipment.Get(y.Attribute("id").Value)))
+                                  .SelectMany(x => x.Select(y => EquipmentTable.Get(y.Attribute("id").Value)))
                                   .Where(x => x != null)
                                   .Select(x => x!);
             foreach (var eqp in equipments)

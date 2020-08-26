@@ -4,18 +4,10 @@ using System.Collections.Generic;
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// 装備品管理用クラス
+    /// 装備品エンティティクラス
     /// </summary>
     public class Equipment
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// 装備一覧
-        /// </summary>
-        private readonly static Dictionary<string, Equipment> _Equipments = new Dictionary<string, Equipment>();
-        #endregion
-
-
         #region プロパティ
         /// <summary>
         /// 装備品ID
@@ -47,40 +39,13 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="name"></param>
         /// <param name="equipmentType"></param>
         /// <param name="size"></param>
-        private Equipment(string equipmentID, string name, EquipmentType equipmentType, Size size)
+        public Equipment(string equipmentID, string name, EquipmentType equipmentType, Size size)
         {
             EquipmentID = equipmentID;
             Name = name;
             EquipmentType = equipmentType;
             Size = size;
         }
-
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        public static void Init()
-        {
-            _Equipments.Clear();
-            X4Database.Instance.ExecQuery("SELECT EquipmentID, EquipmentTypeID, SizeID, Name FROM Equipment", (dr, args) =>
-            {
-                var id = (string)dr["EquipmentID"];
-                var type = (string)dr["EquipmentTypeID"];
-                var size = (string)dr["SizeID"];
-                var name = (string)dr["Name"];
-
-                _Equipments.Add(id, new Equipment(id, name, EquipmentType.Get(type), Size.Get(size)));
-            });
-        }
-
-
-        /// <summary>
-        /// 装備IDに対応する装備を取得する
-        /// </summary>
-        /// <param name="equipmentID">装備ID</param>
-        /// <returns>装備</returns>
-        public static Equipment? Get(string equipmentID) =>
-            _Equipments.TryGetValue(equipmentID, out var equipment) ? equipment : null;
 
 
         /// <summary>
@@ -96,5 +61,46 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         /// <returns>ハッシュ値</returns>
         public override int GetHashCode() => HashCode.Combine(EquipmentID);
+    }
+
+
+    /// <summary>
+    /// 装備品管理用クラス
+    /// </summary>
+    public static class EquipmentTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// 装備一覧
+        /// </summary>
+        private static readonly Dictionary<string, Equipment> _Equipments = new Dictionary<string, Equipment>();
+        #endregion
+
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public static void Init()
+        {
+            _Equipments.Clear();
+            X4Database.Instance.ExecQuery("SELECT EquipmentID, EquipmentTypeID, SizeID, Name FROM Equipment", (dr, args) =>
+            {
+                var id = (string)dr["EquipmentID"];
+                var type = (string)dr["EquipmentTypeID"];
+                var size = (string)dr["SizeID"];
+                var name = (string)dr["Name"];
+
+                _Equipments.Add(id, new Equipment(id, name, EquipmentTypeTable.Get(type), SizeTable.Get(size)));
+            });
+        }
+
+
+        /// <summary>
+        /// 装備IDに対応する装備を取得する
+        /// </summary>
+        /// <param name="equipmentID">装備ID</param>
+        /// <returns>装備</returns>
+        public static Equipment? Get(string equipmentID) =>
+            _Equipments.TryGetValue(equipmentID, out var equipment) ? equipment : null;
     }
 }

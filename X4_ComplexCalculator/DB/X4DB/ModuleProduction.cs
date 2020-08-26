@@ -5,9 +5,48 @@ using System.Linq;
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// モジュール建造方式管理クラス
+    /// モジュール建造方式エンティティクラス
     /// </summary>
     public class ModuleProduction
+    {
+        #region プロパティ
+        /// <summary>
+        /// 建造方式
+        /// </summary>
+        public string Method { get; }
+
+
+        /// <summary>
+        /// 建造時間
+        /// </summary>
+        public double Time { get; }
+        #endregion
+
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="method">建造方式</param>
+        /// <param name="time">建造時間</param>
+        public ModuleProduction(string method, double time)
+        {
+            Method = method;
+            Time = time;
+        }
+
+
+        /// <summary>
+        /// ハッシュ値を取得
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() => HashCode.Combine(Method);
+    }
+
+
+    /// <summary>
+    /// モジュール建造方式管理クラス
+    /// </summary>
+    public static class ModuleProductionTable
     {
         #region スタティックメンバ
         /// <summary>
@@ -15,27 +54,6 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         private static Dictionary<string, ModuleProduction[]> _ModuleProductions = new Dictionary<string, ModuleProduction[]>();
         #endregion
-
-        /// <summary>
-        /// 建造方式
-        /// </summary>
-        public string Method { get; }
-
-        /// <summary>
-        /// 建造時間
-        /// </summary>
-        public double Time { get; }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="method">建造方式</param>
-        /// <param name="time">建造時間</param>
-        private ModuleProduction(string method, double time)
-        {
-            Method = method;
-            Time = time;
-        }
 
 
         /// <summary>
@@ -67,13 +85,5 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="moduleID">モジュールID</param>
         /// <returns>モジュール建造方式一覧</returns>
         public static ModuleProduction[] Get(string moduleID) => _ModuleProductions[moduleID];
-
-
-
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode() => HashCode.Combine(Method);
     }
 }

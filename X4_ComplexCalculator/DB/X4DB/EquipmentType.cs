@@ -4,17 +4,10 @@ using System.Collections.Generic;
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// 装備種別管理用クラス
+    /// 装備種別エンティティクラス
     /// </summary>
     public class EquipmentType
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// 装備種別一覧
-        /// </summary>
-        private readonly static Dictionary<string, EquipmentType> _EquipmentTypes = new Dictionary<string, EquipmentType>();
-        #endregion
-
         #region プロパティ
         /// <summary>
         /// 装備種別ID
@@ -33,11 +26,40 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         /// <param name="equipmentTypeID"></param>
         /// <param name="name"></param>
-        private EquipmentType(string equipmentTypeID, string name)
+        public EquipmentType(string equipmentTypeID, string name)
         {
             EquipmentTypeID = equipmentTypeID;
             Name = name;
         }
+
+
+        /// <summary>
+        /// 比較
+        /// </summary>
+        /// <param name="obj">比較対象</param>
+        /// <returns></returns>
+        public override bool Equals(object? obj) => obj is EquipmentType tgt && tgt.EquipmentTypeID == EquipmentTypeID;
+
+
+        /// <summary>
+        /// ハッシュ値を取得
+        /// </summary>
+        /// <returns>ハッシュ値</returns>
+        public override int GetHashCode() => HashCode.Combine(EquipmentTypeID);
+    }
+
+
+    /// <summary>
+    /// 装備種別管理用クラス
+    /// </summary>
+    public static class EquipmentTypeTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// 装備種別一覧
+        /// </summary>
+        private readonly static Dictionary<string, EquipmentType> _EquipmentTypes = new Dictionary<string, EquipmentType>();
+        #endregion
 
 
         /// <summary>
@@ -62,20 +84,5 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="equipmentTypeID">装備種別ID</param>
         /// <returns>装備種別</returns>
         public static EquipmentType Get(string equipmentTypeID) => _EquipmentTypes[equipmentTypeID];
-
-
-        /// <summary>
-        /// 比較
-        /// </summary>
-        /// <param name="obj">比較対象</param>
-        /// <returns></returns>
-        public override bool Equals(object? obj) => obj is EquipmentType tgt && tgt.EquipmentTypeID == EquipmentTypeID;
-
-
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns>ハッシュ値</returns>
-        public override int GetHashCode() => HashCode.Combine(EquipmentTypeID);
     }
 }

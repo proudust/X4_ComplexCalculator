@@ -149,7 +149,7 @@ WHERE
 
             X4Database.Instance.ExecQuery(query, (dr, _) =>
             {
-                var eqp = Equipment.Get((string)dr["EquipmentID"]);
+                var eqp = EquipmentTable.Get((string)dr["EquipmentID"]);
                 if (eqp != null)
                 {
                     items.Add(new EquipmentListItem(eqp));
@@ -198,7 +198,7 @@ WHERE
 
             SettingDatabase.Instance.ExecQuery(query, (dr, args) =>
             {
-                var eqp = Equipment.Get((string)dr["EquipmentID"]);
+                var eqp = EquipmentTable.Get((string)dr["EquipmentID"]);
                 if (eqp != null)
                 {
                     equipments.Add(new EquipmentListItem(eqp));

@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// ウェア情報管理用クラス
+    /// ウェアエンティティクラス
     /// </summary>
     public class Ware
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// ウェア一覧
-        /// </summary>
-        private readonly static Dictionary<string, Ware> _Wares = new Dictionary<string, Ware>();
-        #endregion
-
-
         #region プロパティ
         /// <summary>
         /// ウェアID
@@ -70,7 +61,7 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="volume">大きさ</param>
         /// <param name="minPrice">最低価格</param>
         /// <param name="maxPrice">最高価格</param>
-        private Ware(string wareID, string name, WareGroup wareGroup, TransportType transportType, long volume, long minPrice, long maxPrice)
+        public Ware(string wareID, string name, WareGroup wareGroup, TransportType transportType, long volume, long minPrice, long maxPrice)
         {
             WareID = wareID;
             Name = name;
@@ -80,35 +71,6 @@ namespace X4_ComplexCalculator.DB.X4DB
             MinPrice = minPrice;
             MaxPrice = maxPrice;
         }
-
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        public static void Init()
-        {
-            _Wares.Clear();
-            X4Database.Instance.ExecQuery($"SELECT * FROM Ware", (dr, args) =>
-            {
-                var id = (string)dr["WareID"];
-                var name = (string)dr["Name"];
-                var volume = (long)dr["Volume"];
-                var minPrice = (long)dr["MinPrice"];
-                var maxPrice = (long)dr["MaxPrice"];
-                var wareGroup = WareGroup.Get((string)dr["WareGroupID"]);
-                var transportType = TransportType.Get((string)dr["TransportTypeID"]);
-
-                _Wares.Add(id, new Ware(id, name, wareGroup, transportType, volume, minPrice, maxPrice));
-            });
-        }
-
-
-        /// <summary>
-        /// ウェアIDに対応するウェアを取得する
-        /// </summary>
-        /// <param name="wareID">ウェアID</param>
-        /// <returns>ウェア</returns>
-        public static Ware Get(string wareID) => _Wares[wareID];
 
 
         /// <summary>
@@ -124,5 +86,48 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         /// <returns>ハッシュ値</returns>
         public override int GetHashCode() => HashCode.Combine(WareID);
+    }
+
+
+    /// <summary>
+    /// ウェア情報管理用クラス
+    /// </summary>
+    public static class WareTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// ウェア一覧
+        /// </summary>
+        private readonly static Dictionary<string, Ware> _Wares = new Dictionary<string, Ware>();
+        #endregion
+
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public static void Init()
+        {
+            _Wares.Clear();
+            X4Database.Instance.ExecQuery($"SELECT * FROM Ware", (dr, args) =>
+            {
+                var id = (string)dr["WareID"];
+                var name = (string)dr["Name"];
+                var volume = (long)dr["Volume"];
+                var minPrice = (long)dr["MinPrice"];
+                var maxPrice = (long)dr["MaxPrice"];
+                var wareGroup = WareGroupTable.Get((string)dr["WareGroupID"]);
+                var transportType = TransportTypeTable.Get((string)dr["TransportTypeID"]);
+
+                _Wares.Add(id, new Ware(id, name, wareGroup, transportType, volume, minPrice, maxPrice));
+            });
+        }
+
+
+        /// <summary>
+        /// ウェアIDに対応するウェアを取得する
+        /// </summary>
+        /// <param name="wareID">ウェアID</param>
+        /// <returns>ウェア</returns>
+        public static Ware Get(string wareID) => _Wares[wareID];
     }
 }

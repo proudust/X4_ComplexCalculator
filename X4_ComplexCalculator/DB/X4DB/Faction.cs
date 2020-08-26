@@ -4,17 +4,10 @@ using System.Collections.Generic;
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// 派閥管理用クラス
+    /// 派閥エンティティクラス
     /// </summary>
     public class Faction
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// 派閥一覧
-        /// </summary>
-        private readonly static Dictionary<string, Faction> _Factions = new Dictionary<string, Faction>();
-        #endregion
-
         #region プロパティ
         /// <summary>
         /// 派閥ID
@@ -41,40 +34,12 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="factionID">派閥ID</param>
         /// <param name="name">派閥名</param>
         /// <param name="race">種族</param>
-        private Faction(string factionID, string name, Race race)
+        public Faction(string factionID, string name, Race race)
         {
             FactionID = factionID;
             Name = name;
             Race = race;
         }
-
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        public static void Init()
-        {
-            _Factions.Clear();
-            X4Database.Instance.ExecQuery("SELECT FactionID, Name, RaceID FROM Faction", (dr, args) =>
-            {
-                var id = (string)dr["FactionID"];
-                var name = (string)dr["Name"];
-                var raceID = (string)dr["RaceID"];
-
-                var race = Race.Get(raceID);
-                if (race == null) return;
-
-                _Factions.Add(id, new Faction(id, name, race));
-            });
-        }
-
-        /// <summary>
-        /// 派閥IDに対応する派閥を取得
-        /// </summary>
-        /// <param name="factionID">派閥ID</param>
-        /// <returns>派閥</returns>
-        public static Faction? Get(string factionID)
-            => _Factions.TryGetValue(factionID, out var faction) ? faction : null;
 
 
         /// <summary>
@@ -90,5 +55,48 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         /// <returns>ハッシュ値</returns>
         public override int GetHashCode() => HashCode.Combine(FactionID);
+    }
+
+
+    /// <summary>
+    /// 派閥管理用クラス
+    /// </summary>
+    public static class FactionTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// 派閥一覧
+        /// </summary>
+        private readonly static Dictionary<string, Faction> _Factions = new Dictionary<string, Faction>();
+        #endregion
+
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public static void Init()
+        {
+            _Factions.Clear();
+            X4Database.Instance.ExecQuery("SELECT FactionID, Name, RaceID FROM Faction", (dr, args) =>
+            {
+                var id = (string)dr["FactionID"];
+                var name = (string)dr["Name"];
+                var raceID = (string)dr["RaceID"];
+
+                var race = RaceTable.Get(raceID);
+                if (race == null) return;
+
+                _Factions.Add(id, new Faction(id, name, race));
+            });
+        }
+
+
+        /// <summary>
+        /// 派閥IDに対応する派閥を取得
+        /// </summary>
+        /// <param name="factionID">派閥ID</param>
+        /// <returns>派閥</returns>
+        public static Faction? Get(string factionID)
+            => _Factions.TryGetValue(factionID, out var faction) ? faction : null;
     }
 }

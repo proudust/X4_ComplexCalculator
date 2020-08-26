@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -106,7 +106,7 @@ ORDER BY Name", init, "SelectModuleCheckStateTypes");
             {
                 bool isChecked = 0 < SettingDatabase.Instance.ExecQuery($"SELECT * FROM SelectModuleCheckStateModuleOwners WHERE ID = '{dr["FactionID"]}'", (_, __) => { });
 
-                var faction = Faction.Get((string)dr["FactionID"]);
+                var faction = FactionTable.Get((string)dr["FactionID"]);
                 if (faction != null) items.Add(new FactionsListItem(faction, isChecked));
             }
 
@@ -177,7 +177,7 @@ WHERE
         {
             // 選択されているアイテムを追加
             var items = Modules.Where(x => x.IsChecked)
-                               .Select(x => DB.X4DB.Module.Get(x.ID))
+                               .Select(x => ModuleTable.Get(x.ID))
                                .Where(x => x != null)
                                .Select(x => x!)
                                .Select(x => new ModulesGridItem(x) { EditStatus = EditStatus.Edited });

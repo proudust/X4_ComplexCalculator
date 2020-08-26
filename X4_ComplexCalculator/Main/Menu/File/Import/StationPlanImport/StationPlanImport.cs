@@ -1,4 +1,4 @@
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -154,7 +154,7 @@ WHERE
 
                 X4Database.Instance.ExecQuery(query, modParam, (dr, _) =>
                 {
-                    var module = Module.Get((string)dr["ModuleID"]);
+                    var module = ModuleTable.Get((string)dr["ModuleID"]);
                     if (module != null)
                     {
                         modules.Add(new ModulesGridItem(module));
@@ -193,7 +193,7 @@ WHERE
                             return;
                     }
 
-                    var equipment = Equipment.Get((string)dr["EquipmentID"]);
+                    var equipment = EquipmentTable.Get((string)dr["EquipmentID"]);
                     if (equipment == null) return;
                     var max = (long)dr["Count"];
                     for (var cnt = 0L; cnt < max; cnt++)

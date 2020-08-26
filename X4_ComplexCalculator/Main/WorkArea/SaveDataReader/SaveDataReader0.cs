@@ -111,7 +111,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.SaveDataReader
             // モジュールを復元
             conn.ExecQuery("SELECT ModuleID, Count FROM Modules ORDER BY Row ASC", (dr, _) =>
             {
-                var module = Module.Get((string)dr["ModuleID"]);
+                var module = ModuleTable.Get((string)dr["ModuleID"]);
                 if (module != null)
                 {
                     var mod = new ModulesGridItem(module, null, (long)dr["Count"]) { EditStatus = EditStatus.Unedited };
@@ -125,7 +125,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.SaveDataReader
             conn.ExecQuery($"SELECT * FROM Equipments", (dr, _) =>
             {
                 var row = (int)(long)dr["row"];
-                var eqp = Equipment.Get((string)dr["EquipmentID"]);
+                var eqp = EquipmentTable.Get((string)dr["EquipmentID"]);
                 if (eqp != null)
                 {
                     modules[row].AddEquipment(eqp);
@@ -182,11 +182,11 @@ namespace X4_ComplexCalculator.Main.WorkArea.SaveDataReader
         protected virtual void InitEditStatus()
         {
             // 初期化対象
-            IEnumerable<IEditable>[] initTargets = 
+            IEnumerable<IEditable>[] initTargets =
             {
                 _WorkArea.Products,
                 _WorkArea.Resources,
-                _WorkArea.StorageAssign 
+                _WorkArea.StorageAssign
             };
 
             foreach (var editables in initTargets)

@@ -256,7 +256,7 @@ WHERE
                     }
                     else
                     {
-                        var race = (method == "default") ? Race.Get("argon") : Race.Get(method);
+                        var race = (method == "default") ? RaceTable.Get("argon") : RaceTable.Get(method);
                         if (race != null)
                         {
                             NeedWareInfoDetails.Add(new NeedWareInfoDetailsItem(race, method, wareID, amount, AggregateTargetProducts[wareID]));

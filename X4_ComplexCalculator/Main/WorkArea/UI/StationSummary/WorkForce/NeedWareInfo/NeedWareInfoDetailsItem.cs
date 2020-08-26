@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using X4_ComplexCalculator.DB.X4DB;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.NeedWareInfo
@@ -115,7 +115,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.NeedWar
             Race             = race;
             Method           = method;
             WareID           = wareID;
-            WareName         = Ware.Get(wareID).Name;
+            WareName         = WareTable.Get(wareID).Name;
             NeedAmount       = needAmount;
             ProductionAmount = productionAmount;
         }

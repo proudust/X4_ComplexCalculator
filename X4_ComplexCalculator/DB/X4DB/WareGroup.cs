@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// ウェア種別(グループ)管理用クラス
+    /// ウェア種別(グループ)エンティティクラス
     /// </summary>
     public class WareGroup
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// ウェア種別一覧
-        /// </summary>
-        private static readonly Dictionary<string, WareGroup> _WareGroups = new Dictionary<string, WareGroup>();
-        #endregion
-
         #region プロパティ
         /// <summary>
         /// ウェアグループID
@@ -42,12 +34,41 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="wareGroupID">ウェアグループID</param>
         /// <param name="name">ウェアグループ名</param>
         /// <param name="Tier">階級</param>
-        private WareGroup(string wareGroupID, string name, long tier)
+        public WareGroup(string wareGroupID, string name, long tier)
         {
             WareGroupID = wareGroupID;
             Name = name;
             Tier = tier;
         }
+
+
+        /// <summary>
+        /// 比較
+        /// </summary>
+        /// <param name="obj">比較対象</param>
+        /// <returns></returns>
+        public override bool Equals(object? obj) => obj is WareGroup tgt && tgt.WareGroupID == WareGroupID;
+
+
+        /// <summary>
+        /// ハッシュ値を取得
+        /// </summary>
+        /// <returns>ハッシュ値</returns>
+        public override int GetHashCode() => HashCode.Combine(WareGroupID);
+    }
+
+
+    /// <summary>
+    /// ウェア種別(グループ)管理クラス
+    /// </summary>
+    public static class WareGroupTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// ウェア種別一覧
+        /// </summary>
+        private static readonly Dictionary<string, WareGroup> _WareGroups = new Dictionary<string, WareGroup>();
+        #endregion
 
 
         /// <summary>
@@ -73,20 +94,5 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="wareGroupID">ウェア種別ID</param>
         /// <returns>ウェア種別</returns>
         public static WareGroup Get(string wareGroupID) => _WareGroups[wareGroupID];
-
-
-        /// <summary>
-        /// 比較
-        /// </summary>
-        /// <param name="obj">比較対象</param>
-        /// <returns></returns>
-        public override bool Equals(object? obj) => obj is WareGroup tgt && tgt.WareGroupID == WareGroupID;
-
-
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns>ハッシュ値</returns>
-        public override int GetHashCode() => HashCode.Combine(WareGroupID);
     }
 }

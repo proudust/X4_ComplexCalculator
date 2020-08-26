@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,6 +12,7 @@ using X4_ComplexCalculator.Common;
 using X4_ComplexCalculator.Common.Collection;
 using X4_ComplexCalculator.Common.EditStatus;
 using X4_ComplexCalculator.Common.Localize;
+using X4_ComplexCalculator.DB.X4DB;
 using X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 using X4_ComplexCalculator.Main.WorkArea.UI.StationSettings;
 
@@ -186,7 +187,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
                     {
                         // モジュール自動追加作業用に実際に追加するモジュールが存在しない場合、
                         // 実際に追加するモジュールと見なす
-                        var module = DB.X4DB.Module.Get(moduleID);
+                        var module = ModuleTable.Get(moduleID);
                         if (module == null) return;
 
                         var mgi = new ModulesGridItem(module, null, count) { EditStatus = EditStatus.Edited };

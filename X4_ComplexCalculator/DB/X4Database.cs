@@ -231,19 +231,19 @@ namespace X4_ComplexCalculator.DB
         /// </summary>
         private static void InitX4DB()
         {
-            DB.X4DB.Size.Init();
-            ModuleType.Init();
-            Race.Init();
-            Faction.Init();
-            EquipmentType.Init();
-            Equipment.Init();
-            TransportType.Init();
-            WareGroup.Init();
-            Ware.Init();
-            ModuleType.Init();
-            ModuleProduction.Init();
-            ModuleEquipment.Init();
-            Module.Init();
+            SizeTable.Init();
+            ModuleTypeTable.Init();
+            RaceTable.Init();
+            FactionTable.Init();
+            EquipmentTypeTable.Init();
+            EquipmentTable.Init();
+            TransportTypeTable.Init();
+            WareGroupTable.Init();
+            WareTable.Init();
+            ModuleTypeTable.Init();
+            ModuleProductionTable.Init();
+            ModuleEquipmentTable.Init();
+            ModuleTable.Init();
         }
     }
 }

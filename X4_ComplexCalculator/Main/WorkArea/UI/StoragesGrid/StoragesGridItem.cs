@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
 using X4_ComplexCalculator.Common.Collection;
@@ -62,7 +62,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StoragesGrid
         /// <param name="details">詳細情報</param>
         public StoragesGridItem(string transportTypeID, IEnumerable<StorageDetailsListItem> details)
         {
-            TransportType = TransportType.Get(transportTypeID);
+            TransportType = TransportTypeTable.Get(transportTypeID);
             Details = new ObservableRangeCollection<StorageDetailsListItem>(details);
         }
 

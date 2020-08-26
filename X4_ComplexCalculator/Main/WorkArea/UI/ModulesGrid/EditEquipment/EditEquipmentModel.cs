@@ -1,4 +1,4 @@
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -89,7 +89,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment
         {
             static void AddItem(SQLiteDataReader dr, object[] args)
             {
-                ((ICollection<DB.X4DB.Size>)args[0]).Add(DB.X4DB.Size.Get((string)dr["SizeID"]));
+                ((ICollection<DB.X4DB.Size>)args[0]).Add(SizeTable.Get((string)dr["SizeID"]));
             }
 
             var sizes = new List<DB.X4DB.Size>();
@@ -107,7 +107,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment
             {
                 bool chkState = 0 < SettingDatabase.Instance.ExecQuery($"SELECT ID FROM SelectModuleEquipmentCheckStateFactions WHERE ID = '{dr["FactionID"]}'", (_, __) => { });
 
-                var faction = Faction.Get((string)dr["FactionID"]);
+                var faction = FactionTable.Get((string)dr["FactionID"]);
                 if (faction != null) ((ICollection<FactionsListItem>)args[0]).Add(new FactionsListItem(faction, chkState));
 
             }

@@ -75,7 +75,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
 
 
                 var setValue = value;
-                
+
                 if (setValue < Ware.MinPrice)
                 {
                     // 入力された値が最低価格未満の場合、最低価格を設定する
@@ -198,7 +198,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
         /// <param name="tradeOption">売買オプション</param>
         public ProductsGridItem(string wareID, IEnumerable<IProductDetailsListItem> datails, TradeOption tradeOption)
         {
-            Ware = Ware.Get(wareID);
+            Ware = WareTable.Get(wareID);
             Details = new ObservableRangeCollection<IProductDetailsListItem>(datails);
 
             _TradeOption = tradeOption;
@@ -215,7 +215,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
         /// <param name="unitPrice">単価</param>
         public ProductsGridItem(string wareID, IEnumerable<IProductDetailsListItem> datails, TradeOption tradeOption, long unitPrice)
         {
-            Ware = Ware.Get(wareID);
+            Ware = WareTable.Get(wareID);
             Details = new ObservableRangeCollection<IProductDetailsListItem>(datails);
 
             _TradeOption = tradeOption;

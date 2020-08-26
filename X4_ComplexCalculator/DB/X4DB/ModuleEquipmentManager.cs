@@ -94,7 +94,7 @@ namespace X4_ComplexCalculator.DB.X4DB
 
             X4Database.Instance.ExecQuery(query, (dr, args) =>
             {
-                var size = Size.Get((string)dr["SizeID"]);
+                var size = SizeTable.Get((string)dr["SizeID"]);
                 _Sizes.Add(size);
                 var maxAmount = (int)(long)dr["Amount"];
                 _MaxAmount.Add(size, maxAmount);

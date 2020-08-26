@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +103,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import
                 var moduleParser = new Regex(@"\$module-(.*?),count:(.*)");
                 var modules = paramDict["l"].Split(";,")
                                             .Select(x => moduleParser.Match(x))
-                                            .Select(x => (Module: Module.Get(x.Groups[1].Value), Count: long.Parse(x.Groups[2].Value)))
+                                            .Select(x => (Module: ModuleTable.Get(x.Groups[1].Value), Count: long.Parse(x.Groups[2].Value)))
                                             .Where(x => x.Module != null)
                                             .Select(x => (Module: x.Module!, x.Count))
                                             .Select(x => new ModulesGridItem(x.Module, null, x.Count) { EditStatus = EditStatus.Unedited });

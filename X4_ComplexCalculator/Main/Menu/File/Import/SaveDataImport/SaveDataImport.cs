@@ -155,7 +155,7 @@ WHERE
 
                 X4Database.Instance.ExecQuery(query, modParam, (dr, _) =>
                 {
-                    var module = Module.Get((string)dr["ModuleID"]);
+                    var module = ModuleTable.Get((string)dr["ModuleID"]);
 
                     if (module != null)
                     {
@@ -197,7 +197,7 @@ WHERE
 
                     }
 
-                    var equipment = Equipment.Get((string)dr["EquipmentID"]);
+                    var equipment = EquipmentTable.Get((string)dr["EquipmentID"]);
                     if (equipment == null) return;
 
                     var max = (long)dr["Count"];

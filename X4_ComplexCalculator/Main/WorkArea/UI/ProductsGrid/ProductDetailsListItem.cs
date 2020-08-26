@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using X4_ComplexCalculator.DB.X4DB;
 using X4_ComplexCalculator.Main.WorkArea.UI.StationSettings;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
@@ -124,7 +125,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid
                 _Efficiencies["sunlight"] = settings.Sunlight;
             }
 
-            ModuleName = DB.X4DB.Module.Get(moduleID)?.Name ?? throw new ArgumentException($"Invalid module ID. ({moduleID})", nameof(moduleID));
+            ModuleName = ModuleTable.Get(moduleID)?.Name ?? throw new ArgumentException($"Invalid module ID. ({moduleID})", nameof(moduleID));
         }
 
 

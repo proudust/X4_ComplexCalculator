@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace X4_ComplexCalculator.DB.X4DB
 {
     /// <summary>
-    /// カーゴタイプ(輸送種別)管理用クラス
+    /// カーゴタイプ(輸送種別)エンティティクラス
     /// </summary>
     public class TransportType
     {
-        #region スタティックメンバ
-        /// <summary>
-        /// カーゴタイプ一覧
-        /// </summary>
-        private readonly static Dictionary<string, TransportType> _TransportTypes = new Dictionary<string, TransportType>();
-        #endregion
-
         #region プロパティ
         /// <summary>
         /// カーゴ種別ID
@@ -35,11 +27,40 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// </summary>
         /// <param name="transportTypeID">カーゴ種別ID</param>
         /// <param name="name">カーゴ種別名</param>
-        private TransportType(string transportTypeID, string name)
+        public TransportType(string transportTypeID, string name)
         {
             TransportTypeID = transportTypeID;
             Name = name;
         }
+
+
+        /// <summary>
+        /// 比較
+        /// </summary>
+        /// <param name="obj">比較対象</param>
+        /// <returns></returns>
+        public override bool Equals(object? obj) => obj is TransportType tgt && tgt.TransportTypeID == TransportTypeID;
+
+
+        /// <summary>
+        /// ハッシュ値を取得
+        /// </summary>
+        /// <returns>ハッシュ値</returns>
+        public override int GetHashCode() => HashCode.Combine(TransportTypeID);
+    }
+
+
+    /// <summary>
+    /// カーゴタイプ(輸送種別)管理用クラス
+    /// </summary>
+    public static class TransportTypeTable
+    {
+        #region スタティックメンバ
+        /// <summary>
+        /// カーゴタイプ一覧
+        /// </summary>
+        private readonly static Dictionary<string, TransportType> _TransportTypes = new Dictionary<string, TransportType>();
+        #endregion
 
 
         /// <summary>
@@ -64,20 +85,5 @@ namespace X4_ComplexCalculator.DB.X4DB
         /// <param name="transportTypeID">カーゴ種別ID</param>
         /// <returns>カーゴ種別</returns>
         public static TransportType Get(string transportTypeID) => _TransportTypes[transportTypeID];
-
-
-        /// <summary>
-        /// 比較
-        /// </summary>
-        /// <param name="obj">比較対象</param>
-        /// <returns></returns>
-        public override bool Equals(object? obj) => obj is TransportType tgt && tgt.TransportTypeID == TransportTypeID;
-
-
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns>ハッシュ値</returns>
-        public override int GetHashCode() => HashCode.Combine(TransportTypeID);
     }
 }
