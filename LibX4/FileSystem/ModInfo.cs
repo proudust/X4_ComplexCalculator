@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using LibX4.Xml;
 
 namespace LibX4.FileSystem
@@ -30,7 +31,7 @@ namespace LibX4.FileSystem
         /// <summary>
         /// バージョン
         /// </summary>
-        public string Version { get; }
+        public ModVersion Version { get; }
 
 
         /// <summary>
@@ -40,15 +41,15 @@ namespace LibX4.FileSystem
 
 
         /// <summary>
-        /// 有効化されているか
+        /// 有効化
         /// </summary>
-        public string Enabled { get; }
+        public bool Enabled { get; }
 
 
         /// <summary>
-        /// 保存ファイルに影響を与えるか？
+        /// セーブデータの互換性
         /// </summary>
-        public string Save { get; }
+        public bool Save { get; }
 
 
         /// <summary>
@@ -63,10 +64,20 @@ namespace LibX4.FileSystem
             ID      = xml.Root.Attribute("id")?.Value      ?? "";
             Name    = xml.Root.Attribute("name")?.Value    ?? "";
             Author  = xml.Root.Attribute("author")?.Value  ?? "";
-            Version = xml.Root.Attribute("version")?.Value ?? "";
+            Version = ModVersion.Parse(xml.Root.Attribute("version")?.Value);
             Date    = xml.Root.Attribute("date")?.Value    ?? "";
-            Enabled = xml.Root.Attribute("enabled")?.Value ?? "";
-            Save    = xml.Root.Attribute("save")?.Value    ?? "";
+            Enabled = ParseBoolean(xml.Root.Attribute("enabled")?.Value);
+            Save    = ParseBoolean(xml.Root.Attribute("save")?.Value);
         }
+
+
+        /// <summary>
+        /// 真偽値を X4 の使用に合わせて整形する
+        /// </summary>
+        /// <param name="booleanString">記載された真偽値</param>
+        /// <returns>整形後のバージョン名</returns>
+        private bool ParseBoolean(string? booleanString)
+            => booleanString == "1"
+            || string.Equals(booleanString, "true", StringComparison.OrdinalIgnoreCase);
     }
 }
