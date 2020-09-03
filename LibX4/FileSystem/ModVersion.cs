@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace LibX4.FileSystem
 {
@@ -62,5 +62,11 @@ namespace LibX4.FileSystem
         /// <inheritdoc />
         public override string ToString() => $"{Major}.{Minor:00}";
 
+
+        /// <summary>
+        /// ModVersion を content.xml や version.bat 内での形式に変換する
+        /// </summary>
+        /// <returns>ModVersion と等しい整数値</returns>
+        public int ToInteger() => (Major * 100) + Minor;
     }
 }

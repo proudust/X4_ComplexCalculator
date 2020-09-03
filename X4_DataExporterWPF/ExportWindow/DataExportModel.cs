@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -68,6 +68,7 @@ namespace X4_DataExporterWPF.DataExportWindow
 
                 // 英語をデフォルトにする
                 var resolver = new LanguageResolver(catFile, language.ID, 44);
+                var modInfos = catFile.GetModInfo();
 
                 var factionsXml = catFile.OpenXml("libraries/factions.xml");
                 var raceXml = catFile.OpenXml("libraries/races.xml");
@@ -79,6 +80,7 @@ namespace X4_DataExporterWPF.DataExportWindow
                 {
                     // 共通
                     new CommonExporter(),                               // 共通情報
+                    new ModInfoExporter(modInfos),                      // MOD 情報
                     new EffectExporter(),                               // 追加効果情報
                     new SizeExporter(resolver),                         // サイズ情報
                     new TransportTypeExporter(resolver),                // カーゴ種別情報
