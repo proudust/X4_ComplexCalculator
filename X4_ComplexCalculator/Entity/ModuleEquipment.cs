@@ -26,7 +26,13 @@ namespace X4_ComplexCalculator.Entity
         /// <summary>
         /// 装備を持っているか
         /// </summary>
-        public bool CanEquipped => Turret.CanEquipped | Shield.CanEquipped;
+        public bool CanEquipped => Turret.CanEquipped || Shield.CanEquipped;
+
+
+        /// <summary>
+        /// 装備中の兵装の列挙
+        /// </summary>
+        public IEnumerable<Equipment> AllEquipments => Turret.AllEquipments.Concat(Shield.AllEquipments);
         #endregion
 
 
@@ -41,30 +47,13 @@ namespace X4_ComplexCalculator.Entity
         }
 
 
-        /// <summary>
-        /// 全装備を列挙する
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Equipment> GetAllEquipment() => Turret.AllEquipments.Concat(Shield.AllEquipments);
-
-
-        /// <summary>
-        /// オブジェクトが同一か判定
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override bool Equals(object? obj)
-        {
-            return obj is ModuleEquipment equipment &&
-                   EqualityComparer<ModuleEquipmentCollection>.Default.Equals(Turret, equipment.Turret) &&
-                   EqualityComparer<ModuleEquipmentCollection>.Default.Equals(Shield, equipment.Shield);
-        }
+            => obj is ModuleEquipment equipment
+            && Turret.Equals(equipment.Turret) && Shield.Equals(equipment.Shield);
 
 
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns>ハッシュ値</returns>
+        /// <inheritdoc />
         public override int GetHashCode() => HashCode.Combine(Turret, Shield);
     }
 }

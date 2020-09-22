@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using X4_ComplexCalculator.DB.X4DB;
 
 namespace X4_ComplexCalculator.Entity
 {
     /// <summary>
-    /// モジュールの装備品管理用クラス
+    /// モジュールの装備兵装のコレクション
     /// </summary>
     public class ModuleEquipmentCollection
     {
         #region メンバ
         /// <summary>
-        /// 装備品
+        /// サイズごとの装備中の兵装リストの辞書
         /// </summary>
         private readonly Dictionary<X4Size, List<Equipment>> _Equipments = new Dictionary<X4Size, List<Equipment>>();
         #endregion
@@ -21,39 +20,32 @@ namespace X4_ComplexCalculator.Entity
 
         #region プロパティ
         /// <summary>
-        /// 装備可能な数
-        /// </summary>
-        public IReadOnlyDictionary<X4Size, int> MaxAmount
-            => _Equipments.ToDictionary(p => p.Key, p => p.Value.Capacity);
-
-
-        /// <summary>
-        /// サイズ一覧
+        /// 装備可能なサイズ一覧
         /// </summary>
         public IEnumerable<X4Size> Sizes => _Equipments.Keys;
 
 
         /// <summary>
-        /// 装備を持てるか
+        /// 何らかの兵装を装備可能かどうか
         /// </summary>
         public bool CanEquipped => 0 < _Equipments.Count;
 
 
         /// <summary>
-        /// 全装備を取得
+        /// 装備中の兵装の列挙
         /// </summary>
         public IEnumerable<Equipment> AllEquipments => _Equipments.Values.SelectMany(x => x);
 
 
         /// <summary>
-        /// 全装備の個数
+        /// 装備中の兵装の数
         /// </summary>
-        public int AllEquipmentsCount => (CanEquipped) ? _Equipments.Sum(x => x.Value.Count) : 0;
+        public int AllEquipmentsCount => CanEquipped ? _Equipments.Sum(x => x.Value.Count) : 0;
         #endregion
 
 
         /// <summary>
-        /// コンストラクタ
+        /// サイズごとの装備可能数からモジュールの装備兵装のコレクションを生成する
         /// </summary>
         /// <param name="capacity">装備可能な装備の数</param>
         public ModuleEquipmentCollection(IReadOnlyDictionary<X4Size, int> capacity)
@@ -61,11 +53,19 @@ namespace X4_ComplexCalculator.Entity
 
 
         /// <summary>
-        /// 装備一覧を取得
+        /// 装備中の兵装の内、指定のサイズのみの列挙を返す
         /// </summary>
-        /// <param name="size">サイズ</param>
-        /// <returns>装備一覧</returns>
-        public IReadOnlyList<Equipment> GetEquipment(X4Size size) => _Equipments[size];
+        /// <param name="size">列挙するサイズ</param>
+        /// <returns>指定のサイズの兵装の列挙</returns>
+        public IEnumerable<Equipment> GetEquipment(X4Size size) => _Equipments[size];
+
+
+        /// <summary>
+        /// 指定のサイズの装備可能数を返す
+        /// </summary>
+        /// <param name="size">列挙するサイズ</param>
+        /// <returns>指定のサイズの兵装の列挙</returns>
+        public int GetCapacity(X4Size size) => _Equipments[size].Capacity;
 
 
         /// <summary>
@@ -84,6 +84,7 @@ namespace X4_ComplexCalculator.Entity
             _Equipments[size].AddRange(equipments);
         }
 
+
         /// <summary>
         /// 装備を追加
         /// </summary>
@@ -97,30 +98,20 @@ namespace X4_ComplexCalculator.Entity
         }
 
 
-        /// <summary>
-        /// 比較
-        /// </summary>
-        /// <param name="obj">比較対象</param>
-        /// <returns></returns>
-        public override bool Equals(object? obj) => obj is ModuleEquipmentCollection tgt && _Equipments.Equals(tgt._Equipments);
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+            => obj is ModuleEquipmentCollection tgt && _Equipments.Equals(tgt._Equipments);
 
 
-        /// <summary>
-        /// ハッシュ値を取得
-        /// </summary>
-        /// <returns>ハッシュ値</returns>
+        /// <inheritdoc />
         public override int GetHashCode()
         {
-            var sb = new StringBuilder();
-
-            foreach (var equipmentID in _Equipments.SelectMany(x => x.Value.Select(y => y.EquipmentID).OrderBy(x => x)))
+            var hash = new HashCode();
+            foreach (var equipment in _Equipments.SelectMany(x => x.Value))
             {
-                sb.Append(equipmentID);
+                hash.Add(equipment);
             }
-
-            var ret = sb.ToString().GetHashCode();
-
-            return ret;
+            return hash.ToHashCode();
         }
     }
 }

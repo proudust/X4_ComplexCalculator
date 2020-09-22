@@ -51,7 +51,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment.Equipm
             {
                 _Equipments.Add(size, new ObservableRangeCollection<EquipmentListItem>());
                 _Equipped.Add(size, new ObservableRangeCollection<EquipmentListItem>());
-                _MaxAmount.Add(size, Module.ModuleEquipment.Turret.MaxAmount[size]);
+                _MaxAmount.Add(size, Module.ModuleEquipment.Turret.GetCapacity(size));
 
                 // 前回値復元
                 var equipments = Module.ModuleEquipment.Turret.GetEquipment(size).Take(_MaxAmount[size]).Select(x => new EquipmentListItem(x));
