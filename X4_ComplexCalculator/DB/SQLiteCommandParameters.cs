@@ -16,9 +16,6 @@ namespace X4_ComplexCalculator.DB
         /// </summary>
         private readonly List<SQLiteParameter> _Parameters;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly int ValueCnt;
         #endregion
 

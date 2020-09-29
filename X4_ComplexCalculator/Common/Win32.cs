@@ -7,7 +7,7 @@ namespace X4_ComplexCalculator.Common
     /// <summary>
     /// Win32API用ラッパクラス
     /// </summary>
-    public class Win32
+    public static class Win32
     {
         #region 定数
         public const int WH_CBT = 5;

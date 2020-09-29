@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 
 namespace X4_ComplexCalculator.Common.Localize
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Common.Localize
     /// <summary>
     /// ローカライズ対応メッセージボックス
     /// </summary>
-    public class LocalizedMessageBox
+    public static class LocalizedMessageBox
     {
         /// <summary>
         /// フック処理

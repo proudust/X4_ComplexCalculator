@@ -59,7 +59,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.SaveDataImport
         {
             get
             {
-                var @checked = Stations.Where(x => x.IsChecked).Count();
+                var @checked = Stations.Count(x => x.IsChecked);
 
                 return (@checked == 0) ? (bool?)false :
                        (@checked == Stations.Count) ? (bool?)true : null;
@@ -113,9 +113,9 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.SaveDataImport
         {
             _Model = new SelectStationModel();
             _SelectedStationItems = stationItems;
-            OkButtonClickedCommand      = new DelegateCommand(OkButtonClicked);
-            CancelButtonClickedCommand  = new DelegateCommand(CancelButtonClicked);
-            SelectSaveDataFileCommand   = new DelegateCommand(_Model.SelectSaveDataFile);
+            OkButtonClickedCommand = new DelegateCommand(OkButtonClicked);
+            CancelButtonClickedCommand = new DelegateCommand(CancelButtonClicked);
+            SelectSaveDataFileCommand = new DelegateCommand(_Model.SelectSaveDataFile);
         }
 
 

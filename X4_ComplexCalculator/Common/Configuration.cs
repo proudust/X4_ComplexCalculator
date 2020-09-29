@@ -11,7 +11,7 @@ namespace X4_ComplexCalculator.Common
     /// <summary>
     /// 設定ファイル読み込み用
     /// </summary>
-    class Configuration
+    static class Configuration
     {
         private static IConfigurationRoot? Config;
 
