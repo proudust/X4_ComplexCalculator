@@ -19,10 +19,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .Net Core 3.1
+      - name: Setup .Net 5.0
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.x
+          dotnet-version: 5.0.100-rc.2.20479.15
 
       - name: Restore dependencies
         run: dotnet restore
