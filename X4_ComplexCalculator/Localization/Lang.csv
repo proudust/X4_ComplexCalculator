@@ -62,6 +62,7 @@ UpdateDB;Update DB
 DBUpdateConfirmationMessage;Do you want to display the DB update screen? \r\nPlease wait for a moment until the screen starts.
 DBUpdateRestartRequestMessage;Please restart the application to apply the DB update.
 DBUpdateFailureMessage;Failed to update the DB, \r\nplease check if the DB file is accessible and try again.
+Exit;Exit
 
 # View(W) ----------------------------------------------
 View;View(_V)

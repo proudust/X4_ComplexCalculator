@@ -144,6 +144,17 @@
                     Header="{lex:Loc Lang:UpdateDB}"
                     InputGestureText="Ctrl+U" />
 
+                <Separator />
+
+                <!--  終了  -->
+                <MenuItem Header="{lex:Loc Lang:Exit}" InputGestureText="Alt+F4">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:CallMethodAction MethodName="Close" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+
             </MenuItem>
 
 
