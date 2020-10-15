@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using LibX4.Xml;
 
 namespace LibX4.FileSystem
 {

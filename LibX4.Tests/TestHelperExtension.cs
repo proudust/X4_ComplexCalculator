@@ -15,13 +15,13 @@ namespace LibX4.Tests
         /// <returns>文頭文末の改行及び各行のインデントを取り除いた文字列</returns>
         public static string TrimIndent(this string source)
         {
-            var lines = source.Split("\n").ToList();
-            if (string.IsNullOrWhiteSpace(lines.First())) lines.RemoveAt(0);
-            if (string.IsNullOrWhiteSpace(lines.Last())) lines.RemoveAt(lines.Count - 1);
+            var lines = source.Split("\r\n").ToList();
+            if (string.IsNullOrWhiteSpace(lines[0])) lines.RemoveAt(0);
+            if (string.IsNullOrWhiteSpace(lines[^1])) lines.RemoveAt(lines.Count - 1);
             var indent = lines
                 .Where(l => !string.IsNullOrWhiteSpace(l))
                 .Min(l => l.TakeWhile(char.IsWhiteSpace).Count());
-            return string.Join("\n", lines.Select(l => l.Substring(indent)));
+            return string.Join("\r\n", lines.Select(l => l[indent..]));
         }
 
 

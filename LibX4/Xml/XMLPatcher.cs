@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace LibX4.FileSystem
+namespace LibX4.Xml
 {
     /// <summary>
     /// XML差分パッチ用クラス
