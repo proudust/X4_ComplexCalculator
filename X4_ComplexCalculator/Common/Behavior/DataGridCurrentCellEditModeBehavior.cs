@@ -63,13 +63,13 @@ namespace X4_ComplexCalculator.Common.Behavior
         /// <param name="e"></param>
         private static void DataGrid_CurrentCellChanged(object? sender, EventArgs e)
         {
-            if (!(sender is DataGrid dg) || dg.CurrentCell == null || dg.CurrentCell.Column == null)
+            if (!(sender is DataGrid dg) || dg?.CurrentCell.Column == null)
             {
                 return;
             }
 
             // セルが読み取り専用でなければ編集モードにする
-            if (GetEnabled((DependencyObject)sender) && dg.CurrentCell.Column.GetCellContent(dg.CurrentCell.Item)?.Parent is DataGridCell cell && !cell.IsReadOnly)
+            if (GetEnabled(dg) && dg.CurrentCell.Column.GetCellContent(dg.CurrentCell.Item)?.Parent is DataGridCell cell && !cell.IsReadOnly)
             {
                 cell.IsEditing = true;
             }
