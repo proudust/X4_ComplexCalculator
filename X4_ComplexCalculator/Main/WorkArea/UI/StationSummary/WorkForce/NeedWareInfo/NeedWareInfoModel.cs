@@ -350,26 +350,19 @@ WHERE
         /// <param name="e"></param>
         private void Products_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            System.Collections.IList[] items = { e.NewItems, e.OldItems };
+            var items = new[] { e.NewItems, e.OldItems }
+                .SelectMany(l => l?.Cast<ProductsGridItem>() ?? Array.Empty<ProductsGridItem>())
+                .Where(x => AggregateTargetProducts.ContainsKey(x.Ware.WareID));
 
-            foreach (var item in items)
+            foreach (var prod in items)
             {
-                if (item == null)
+                var amount = prod.Details.Where(x => 0 < x.Amount).Sum(x => x.Amount);
+                AggregateTargetProducts[prod.Ware.WareID] = amount;
+
+                var ware = NeedWareInfoDetails.FirstOrDefault(x => x.WareID == prod.Ware.WareID);
+                if (ware != null)
                 {
-                    continue;
-                }
-
-
-                foreach (var prod in item.Cast<ProductsGridItem>().Where(x => AggregateTargetProducts.ContainsKey(x.Ware.WareID)))
-                {
-                    var amount = prod.Details.Where(x => 0 < x.Amount).Sum(x => x.Amount);
-                    AggregateTargetProducts[prod.Ware.WareID] = amount;
-
-                    var ware = NeedWareInfoDetails.FirstOrDefault(x => x.WareID == prod.Ware.WareID);
-                    if (ware != null)
-                    {
-                        ware.ProductionAmount = amount;
-                    }
+                    ware.ProductionAmount = amount;
                 }
             }
 
