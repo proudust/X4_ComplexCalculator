@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     x:Class="X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.ModulesGrid"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -22,7 +22,7 @@
     <UserControl.Resources>
 
         <!--  モジュール一覧右クリック時のコンテキストメニュー  -->
-        <ContextMenu x:Key="ModulesGridContextMenu">
+        <ContextMenu x:Key="ModulesGridContextMenu" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
 
             <!--  コピー  -->
             <MenuItem
@@ -105,14 +105,20 @@
             x4bhv:DataGridFocusCellBehavior.FocusCommand="{Binding ContextMenu.CellFocusCommand, Mode=OneWayToSource}"
             x4bhv:VirtualizedDataGridSelectBehavior.VirtualizedSelectionEnabled="True"
             CellStyle="{StaticResource DataGridCellDefaultStyle}"
-            ContextMenu="{StaticResource ModulesGridContextMenu}"
             IsSynchronizedWithCurrentItem="True"
             ItemsSource="{Binding ModulesView, Mode=OneTime}"
             RowHeaderStyle="{StaticResource EditedItemHighlightRowHeaderStyle}"
             RowHeight="25"
-            RowStyle="{StaticResource ReorderbleDataGridRowStyle}"
             SelectionUnit="FullRow"
             Style="{StaticResource DefaultDataGridStyle}">
+
+            <!--  モジュールを右クリック時のコンテキストメニュー  -->
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource ReorderbleDataGridRowStyle}" TargetType="DataGridRow">
+                    <Setter Property="Tag" Value="{Binding Path=DataContext, ElementName=moduleGrid, Mode=OneTime}" />
+                    <Setter Property="ContextMenu" Value="{StaticResource ModulesGridContextMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
 
             <!--  キーボードショートカット  -->
             <DataGrid.InputBindings>
