@@ -16,7 +16,7 @@ namespace X4_DataExporterWPF.DataExportWindow
     /// <summary>
     /// データ抽出処理用Model
     /// </summary>
-    class DataExportModel
+    internal class DataExportModel
     {
         /// <summary>
         /// 言語一覧を更新
@@ -54,7 +54,7 @@ namespace X4_DataExporterWPF.DataExportWindow
             string inDirPath,
             string outFilePath,
             LangComboboxItem language,
-            Window owner
+            Window? owner
         )
         {
             var catFile = new CatFile(inDirPath);
@@ -137,7 +137,7 @@ namespace X4_DataExporterWPF.DataExportWindow
                 }
 
                 trans.Commit();
-                owner.Dispatcher.BeginInvoke((Action)(() =>
+                owner?.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     MessageBox.Show("Data export completed.", "X4 DataExporter", MessageBoxButton.OK, MessageBoxImage.Information);
                 }));
@@ -156,7 +156,7 @@ Please report the following content to the developer.
 2. Crash report file.
 3. Version of X4.";
 
-                owner.Dispatcher.BeginInvoke((Action)(() =>
+                owner?.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     MessageBox.Show(owner, msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     System.Diagnostics.Process.Start("explorer.exe", $@"/select,""{dumpPath}""");

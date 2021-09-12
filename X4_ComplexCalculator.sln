@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
@@ -18,7 +18,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E5D62F0-53B8-4AB3-8F8B-07A338482BDC}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X4_DataExporterWPF.Benchmark", "X4_DataExporterWPF.Benchmark\X4_DataExporterWPF.Benchmark.csproj", "{E2A203B2-478B-4AB4-80CD-0E2EA204C3EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +53,10 @@ Global
 		{CCEDDFE8-50C7-4061-ADD0-146D7F7B84CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCEDDFE8-50C7-4061-ADD0-146D7F7B84CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCEDDFE8-50C7-4061-ADD0-146D7F7B84CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A203B2-478B-4AB4-80CD-0E2EA204C3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A203B2-478B-4AB4-80CD-0E2EA204C3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A203B2-478B-4AB4-80CD-0E2EA204C3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A203B2-478B-4AB4-80CD-0E2EA204C3EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

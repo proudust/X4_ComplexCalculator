@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 
+[assembly: InternalsVisibleTo("X4_DataExporterWPF.Benchmark")]
 [assembly: InternalsVisibleTo("X4_DataExporterWPF.Tests")]
 
 [assembly: ThemeInfo(
