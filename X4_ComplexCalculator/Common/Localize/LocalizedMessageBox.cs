@@ -1,5 +1,8 @@
-﻿using System;
+using System;
 using System.Windows;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace X4_ComplexCalculator.Common.Localize;
 
@@ -11,12 +14,12 @@ public class LocalizedMessageBox
     /// <summary>
     /// フック処理
     /// </summary>
-    private static Win32.WindowsHookProc? _HookProcDelegate = null;
+    private static HOOKPROC? _HookProcDelegate = null;
 
     /// <summary>
     /// フックプロシージャのハンドル
     /// </summary>
-    private static int _hHook = 0;
+    private static HHOOK _hHook = default;
 
     /// <summary>
     /// メッセージボックスのタイトル文字列
@@ -53,9 +56,9 @@ public class LocalizedMessageBox
         _Msg = string.Format(format, param);
         _Title = (string)WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.GetLocalizedObject(captionKey, null, null); ;
 
-        _HookProcDelegate = new Win32.WindowsHookProc(HookCallback);
+        _HookProcDelegate = new HOOKPROC(HookCallback);
 
-        _hHook = Win32.SetWindowsHookEx(Win32.WH_CBT, _HookProcDelegate, IntPtr.Zero, Win32.GetCurrentThreadId());
+        _hHook = PInvoke.SetWindowsHookEx(WINDOWS_HOOK_ID.WH_CBT, _HookProcDelegate, default(HINSTANCE), PInvoke.GetCurrentThreadId());
 
         var result = MessageBox.Show(_Msg, _Title, button, icon, defaultResult);
 
@@ -72,29 +75,31 @@ public class LocalizedMessageBox
     /// <param name="wParam"></param>
     /// <param name="lParam"></param>
     /// <returns></returns>
-    private static int HookCallback(int code, IntPtr wParam, IntPtr lParam)
+    private static LRESULT HookCallback(int code, WPARAM wParam, LPARAM lParam)
     {
-        int hHook = _hHook;
+        var hHook = _hHook;
 
         if (code == Win32.HCBT_ACTIVATE)
         {
+            var hWnd = new HWND((nint)wParam.Value);
+
             // ハンドルのクラス名がダイアログボックスの場合のみ処理
-            if (Win32.GetClassName(wParam) == "#32770")
+            if (Win32.GetClassName(hWnd) == "#32770")
             {
                 // ダイアログボックスのタイトルとメッセージを取得
-                string title = Win32.GetWindowText(wParam);
-                string msg = Win32.GetDlgItemText(wParam, 0xFFFF);      // -1 = IDC_STATIC
+                var title = Win32.GetWindowText(hWnd);
+                var msg = Win32.GetDlgItemText(hWnd, 0xFFFF);      // -1 = IDC_STATIC
 
                 // タイトルとメッセージが一致した場合、ダイアログの位置を親ウィンドウの中央に移動する
-                if ((title == _Title) && (msg == _Msg))
+                if (title.SequenceEqual(_Title) && msg.SequenceEqual(_Msg))
                 {
-                    MoveToCenterOnParent(wParam);
+                    MoveToCenterOnParent(hWnd);
                     UnHook();
                 }
             }
         }
 
-        return Win32.CallNextHookEx(hHook, code, wParam, lParam);
+        return PInvoke.CallNextHookEx(hHook, code, wParam, lParam);
     }
 
 
@@ -103,8 +108,8 @@ public class LocalizedMessageBox
     /// </summary>
     private static void UnHook()
     {
-        Win32.UnhookWindowsHookEx(_hHook);
-        _hHook = 0;
+        PInvoke.UnhookWindowsHookEx(_hHook);
+        _hHook = default;
         _Msg   = null;
         _Title = null;
         _HookProcDelegate = null;
@@ -115,23 +120,31 @@ public class LocalizedMessageBox
     /// 子ウィンドウを親ウィンドウの中央に移動する
     /// </summary>
     /// <param name="hChildWnd"></param>
-    private static void MoveToCenterOnParent(IntPtr hChildWnd)
+    private static void MoveToCenterOnParent(HWND hChildWnd)
     {
         // 子ウィンドウの領域取得
-        var childRect = new Win32.RECT();
-        Win32.GetWindowRect(hChildWnd, ref childRect);
-        int cxChild = childRect.Right  - childRect.Left;
-        int cyChild = childRect.Bottom - childRect.Top;
+        PInvoke.GetWindowRect(hChildWnd, out var childRect);
+        int cxChild = childRect.right - childRect.left;
+        int cyChild = childRect.bottom - childRect.top;
 
         // 親ウィンドウの領域取得
-        var parentRect = new Win32.RECT();
-        Win32.GetWindowRect(Win32.GetParent(hChildWnd), ref parentRect);
-        int cxParent = parentRect.Right  - parentRect.Left;
-        int cyParent = parentRect.Bottom - parentRect.Top;
+        PInvoke.GetWindowRect(PInvoke.GetParent(hChildWnd), out var parentRect);
+        int cxParent = parentRect.right - parentRect.left;
+        int cyParent = parentRect.bottom - parentRect.top;
 
         // 子ウィンドウを親ウィンドウの中央に移動
-        int x = parentRect.Left + (cxParent - cxChild) / 2;
-        int y = parentRect.Top  + (cyParent - cyChild) / 2;
-        Win32.SetWindowPos(hChildWnd, IntPtr.Zero, x, y, 0, 0, 0x15);   // 0x15 = SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE
+        int x = parentRect.left + (cxParent - cxChild) / 2;
+        int y = parentRect.top + (cyParent - cyChild) / 2;
+        PInvoke.SetWindowPos(
+            hChildWnd,
+            default,
+            x,
+            y,
+            0,
+            0,
+            SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
+                | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE
+        );
     }
 }

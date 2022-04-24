@@ -1,0 +1,12 @@
+﻿CallNextHookEx
+GetClassName
+GetCurrentThreadId
+GetDlgItem
+GetDlgItemText
+GetParent
+GetWindowRect
+GetWindowText
+GetWindowTextLength
+SetWindowPos
+SetWindowsHookEx
+UnhookWindowsHookEx
