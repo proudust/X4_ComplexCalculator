@@ -1,5 +1,5 @@
-﻿using Prism.Commands;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -87,7 +87,7 @@ public class ContextMenuOperation : ObservableObject, IDisposable
     /// <summary>
     /// ソート順を初期化
     /// </summary>
-    public DelegateCommand ResetSortOrderCommand { get; }
+    public RelayCommand ResetSortOrderCommand { get; }
 
     // ---------------------------------------------------------------------- //
 
@@ -111,10 +111,10 @@ public class ContextMenuOperation : ObservableObject, IDisposable
 
         ((INotifyCollectionChanged)_CollectionView.SortDescriptions).CollectionChanged += ContextMenuOperation_CollectionChanged;
 
-        CopyModulesCommand    = new DelegateCommand(CopyModules);
-        PasteModulesCommand   = new DelegateCommand<DataGrid>(PasteModules);
-        DeleteModulesCommand  = new DelegateCommand<DataGrid>(DeleteModules);
-        ResetSortOrderCommand = new DelegateCommand(
+        CopyModulesCommand    = new RelayCommand(CopyModules);
+        PasteModulesCommand   = new RelayCommand<DataGrid>(PasteModules);
+        DeleteModulesCommand  = new RelayCommand<DataGrid>(DeleteModules);
+        ResetSortOrderCommand = new RelayCommand(
             () => _CollectionView.SortDescriptions.Clear(),
             () => 0 < _CollectionView.SortDescriptions.Count
         );
@@ -139,7 +139,7 @@ public class ContextMenuOperation : ObservableObject, IDisposable
         _ModuleReorder.SortedColumnCount = _CollectionView.SortDescriptions.Count;
 
         // ソート順初期化可不可更新
-        ResetSortOrderCommand.RaiseCanExecuteChanged();
+        ResetSortOrderCommand.NotifyCanExecuteChanged();
     }
 
 

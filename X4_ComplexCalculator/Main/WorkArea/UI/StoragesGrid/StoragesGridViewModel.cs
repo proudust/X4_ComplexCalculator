@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
@@ -42,7 +42,7 @@ public class StoragesGridViewModel : ObservableObject, IDisposable
     public StoragesGridViewModel(IStationData stationData)
     {
         _Model = new StoragesGridModel(stationData.ModulesInfo, stationData.StoragesInfo);
-        SetSelectedExpandedCommand = new DelegateCommand<bool?>(SetSelectedExpanded);
+        SetSelectedExpandedCommand = new RelayCommand<bool?>(SetSelectedExpanded);
     }
 
 

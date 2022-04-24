@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -111,9 +111,9 @@ class LoadoutImportViewModel : ObservableObject
     public LoadoutImportViewModel()
     {
         _Model = new LoadoutImportModel();
-        ImportButtonClickedCommand = new DelegateCommand(_Model.Import);
-        CloseButtonClickedCommand  = new DelegateCommand(CloseButtonClicked);
-        SelectSaveDataFileCommand  = new DelegateCommand(_Model.SelectSaveDataFile);
+        ImportButtonClickedCommand = new RelayCommand(_Model.Import);
+        CloseButtonClickedCommand  = new RelayCommand(CloseButtonClicked);
+        SelectSaveDataFileCommand  = new RelayCommand(_Model.SelectSaveDataFile);
     }
 
 

@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -201,7 +201,7 @@ public class ModulesGridItem : ObservableObjectEx, IEditable, ISelectable, IReor
     {
         Module = module;
         ModuleCount = moduleCount;
-        EditEquipmentCommand = new DelegateCommand(EditEquipment);
+        EditEquipmentCommand = new RelayCommand(EditEquipment);
         Equipments = new EquippableWareEquipmentManager(module);
         Equipments.CollectionChanged += Equipments_CollectionChanged;
         
@@ -232,7 +232,7 @@ public class ModulesGridItem : ObservableObjectEx, IEditable, ISelectable, IReor
         Shields = new EquipmentsInfo(Equipments, "shields");
         UpdateEquipmentInfo();
 
-        EditEquipmentCommand = new DelegateCommand(EditEquipment);
+        EditEquipmentCommand = new RelayCommand(EditEquipment);
     }
 
 

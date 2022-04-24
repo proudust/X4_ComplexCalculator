@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Windows.Data;
@@ -93,9 +93,9 @@ public class ModulesGridViewModel : ObservableObject, IDisposable
         ModulesView.Filter   = Filter;
         ContextMenu = new ContextMenuOperation(stationData.ModulesInfo, ModulesView);
 
-        AddModuleCommand     = new DelegateCommand(_Model.ShowAddModuleWindow);
-        MergeModuleCommand   = new DelegateCommand(_Model.MergeModule);
-        ReplaceModuleCommand = new DelegateCommand<ModulesGridItem>(ReplaceModule);
+        AddModuleCommand     = new RelayCommand(_Model.ShowAddModuleWindow);
+        MergeModuleCommand   = new RelayCommand(_Model.MergeModule);
+        ReplaceModuleCommand = new RelayCommand<ModulesGridItem>(ReplaceModule);
     }
 
 

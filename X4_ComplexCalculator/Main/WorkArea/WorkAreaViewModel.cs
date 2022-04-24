@@ -1,8 +1,8 @@
 using AvalonDock;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
-using Prism.Commands;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -164,7 +164,7 @@ public class WorkAreaViewModel : ObservableObject, IDisposable
         StorageAssign = new StorageAssignViewModel(_Model.StationData);
 
         Modules.AutoAddModuleCommand = Products.AutoAddModuleCommand;
-        OnLoadedCommand     = new DelegateCommand<DockingManager>(OnLoaded);
+        OnLoadedCommand     = new RelayCommand<DockingManager>(OnLoaded);
 
         _Model.PropertyChanged += Model_PropertyChanged;
         LocalizeDictionary.Instance.PropertyChanged += Instance_PropertyChanged;

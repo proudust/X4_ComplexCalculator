@@ -1,6 +1,6 @@
 ﻿using AvalonDock;
 using GongSolutions.Wpf.DragDrop;
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using System;
@@ -246,36 +246,36 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     {
         _WorkAreaFileIO                  = new WorkAreaFileIO(_WorkAreaManager);
         _MainWindowModel                 = new MainWindowModel(_WorkAreaManager, _WorkAreaFileIO);
-        WindowLoadedCommand              = new DelegateCommand(WindowLoaded);
-        WindowClosingCommand             = new DelegateCommand<CancelEventArgs>(WindowClosing);
-        CreateNewCommand                 = new DelegateCommand(CreateNew);
-        SaveLayout                       = new DelegateCommand(_WorkAreaManager.SaveLayout);
-        SaveCommand                      = new DelegateCommand(_WorkAreaFileIO.Save);
-        SaveAsCommand                    = new DelegateCommand(_WorkAreaFileIO.SaveAs);
-        OpenCommand                      = new DelegateCommand(Open);
-        UpdateDBCommand                  = new DelegateCommand(_MainWindowModel.UpdateDB);
-        ReportIssueCommand               = new DelegateCommand(ReportIssue);
+        WindowLoadedCommand              = new RelayCommand(WindowLoaded);
+        WindowClosingCommand             = new RelayCommand<CancelEventArgs>(WindowClosing);
+        CreateNewCommand                 = new RelayCommand(CreateNew);
+        SaveLayout                       = new RelayCommand(_WorkAreaManager.SaveLayout);
+        SaveCommand                      = new RelayCommand(_WorkAreaFileIO.Save);
+        SaveAsCommand                    = new RelayCommand(_WorkAreaFileIO.SaveAs);
+        OpenCommand                      = new RelayCommand(Open);
+        UpdateDBCommand                  = new RelayCommand(_MainWindowModel.UpdateDB);
+        ReportIssueCommand               = new RelayCommand(ReportIssue);
         CheckUpdateAtLaunch              = new ReactiveProperty<bool>(Configuration.Instance.CheckUpdateAtLaunch);
-        SetCheckUpdateAtLaunchCommand    = new DelegateCommand(SetCheckUpdateAtLaunch);
+        SetCheckUpdateAtLaunchCommand    = new RelayCommand(SetCheckUpdateAtLaunch);
         CheckUpdateCommand               = new AsyncReactiveCommand<bool>().WithSubscribe(CheckUpdate);
-        VersionInfoCommand               = new DelegateCommand(ShowVersionInfo);
-        DocumentClosingCommand           = new DelegateCommand<DocumentClosingEventArgs>(DocumentClosing);
-        OpenEmpireOverviewWindowCommand  = new DelegateCommand(OpenEmpireOverviewWindow);
-        OpenDBViewerWindowCommand        = new DelegateCommand(OpenDBViewerWindow);
+        VersionInfoCommand               = new RelayCommand(ShowVersionInfo);
+        DocumentClosingCommand           = new RelayCommand<DocumentClosingEventArgs>(DocumentClosing);
+        OpenEmpireOverviewWindowCommand  = new RelayCommand(OpenEmpireOverviewWindow);
+        OpenDBViewerWindowCommand        = new RelayCommand(OpenDBViewerWindow);
         _WorkAreaFileIO.PropertyChanged += Member_PropertyChanged;
 
         _ImportExporter = new ImportExporter(_WorkAreaManager);
         Imports = new List<IImport>()
         {
-            new StationCalculatorImport(new DelegateCommand<IImport>(_ImportExporter.Import)),
-            new StationPlanImport(new DelegateCommand<IImport>(_ImportExporter.Import)),
-            new LoadoutImport(new DelegateCommand<IImport>(_ImportExporter.Import)),
-            //new SaveDataImport(new DelegateCommand<IImport>(_Model.Import))   // 作成中のため未リリース
+            new StationCalculatorImport(new RelayCommand<IImport>(_ImportExporter.Import)),
+            new StationPlanImport(new RelayCommand<IImport>(_ImportExporter.Import)),
+            new LoadoutImport(new RelayCommand<IImport>(_ImportExporter.Import)),
+            //new SaveDataImport(new RelayCommand<IImport>(_Model.Import))   // 作成中のため未リリース
         };
 
         Exports = new List<IExport>()
         {
-            new StationCalculatorExport(new DelegateCommand<IExport>(_ImportExporter.Export))
+            new StationCalculatorExport(new RelayCommand<IExport>(_ImportExporter.Export))
         };
     }
 

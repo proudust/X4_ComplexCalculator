@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,7 +72,7 @@ public class DataGridFocusCellBehavior
         if (hasCommand == false)
         {
             // 未設定の場合
-            var command = new DelegateCommand<object>(FocusCommandExecute);
+            var command = new RelayCommand<object>(FocusCommandExecute);
 
             // コマンドを設定済みにする
             sender.SetValue(HasFocusCommandProperty, true);

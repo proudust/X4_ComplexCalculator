@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
@@ -104,7 +104,7 @@ public class BuildResourcesGridViewModel : ObservableObject, IDisposable
 
         BuildResourceView = new CollectionViewSource { Source = _Model.Resources }.View;
         BuildResourceView.SortDescriptions.Add(new SortDescription("Ware.Name", ListSortDirection.Ascending));
-        SetNoBuyToSelectedItemCommand = new DelegateCommand<bool?>(SetNoBuyToSelectedItem);
+        SetNoBuyToSelectedItemCommand = new RelayCommand<bool?>(SetNoBuyToSelectedItem);
     }
 
 

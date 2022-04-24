@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,25 +50,25 @@ public class ModulesReorder : ObservableObject
     /// <summary>
     /// モジュール選択
     /// </summary>
-    public DelegateCommand SelectModulesCommand { get; }
+    public RelayCommand SelectModulesCommand { get; }
 
 
     /// <summary>
     /// モジュール選択解除
     /// </summary>
-    public DelegateCommand ClearSelectionCommand { get; }
+    public RelayCommand ClearSelectionCommand { get; }
 
 
     /// <summary>
     /// 選択項目を上に移動する
     /// </summary>
-    public DelegateCommand MoveUpTheSelectionCommand { get; }
+    public RelayCommand MoveUpTheSelectionCommand { get; }
 
 
     /// <summary>
     /// 選択項目を下に移動する
     /// </summary>
-    public DelegateCommand MoveDownTheSelectionCommand { get; }
+    public RelayCommand MoveDownTheSelectionCommand { get; }
 
 
     /// <summary>
@@ -81,8 +81,8 @@ public class ModulesReorder : ObservableObject
         {
             if (SetProperty(ref _HasSelected, value))
             {
-                MoveUpTheSelectionCommand.RaiseCanExecuteChanged();
-                MoveDownTheSelectionCommand.RaiseCanExecuteChanged();
+                MoveUpTheSelectionCommand.NotifyCanExecuteChanged();
+                MoveDownTheSelectionCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -98,8 +98,8 @@ public class ModulesReorder : ObservableObject
         {
             if (SetProperty(ref _SortedColumnCount, value))
             {
-                MoveUpTheSelectionCommand.RaiseCanExecuteChanged();
-                MoveDownTheSelectionCommand.RaiseCanExecuteChanged();
+                MoveUpTheSelectionCommand.NotifyCanExecuteChanged();
+                MoveDownTheSelectionCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -120,10 +120,10 @@ public class ModulesReorder : ObservableObject
     {
         _ModulesInfo = modulesInfo;
         _CollectionView = listCollectionView;
-        SelectModulesCommand        = new DelegateCommand(SelectModules);
-        ClearSelectionCommand       = new DelegateCommand(ClearSelection);
-        MoveUpTheSelectionCommand   = new DelegateCommand(MoveUpTheSelection, () => CanMode);
-        MoveDownTheSelectionCommand = new DelegateCommand(MoveDownTheSelection, () => CanMode);
+        SelectModulesCommand        = new RelayCommand(SelectModules);
+        ClearSelectionCommand       = new RelayCommand(ClearSelection);
+        MoveUpTheSelectionCommand   = new RelayCommand(MoveUpTheSelection, () => CanMode);
+        MoveDownTheSelectionCommand = new RelayCommand(MoveDownTheSelection, () => CanMode);
     }
 
 

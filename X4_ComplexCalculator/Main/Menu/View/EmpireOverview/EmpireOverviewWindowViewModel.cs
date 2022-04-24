@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -46,7 +46,7 @@ class EmpireOverviewWindowViewModel : ObservableObject
         ProductsView.SortDescriptions.Add(new SortDescription("Ware.WareGroup.Tier", ListSortDirection.Ascending));
         ProductsView.SortDescriptions.Add(new SortDescription("Ware.Name", ListSortDirection.Ascending));
 
-        WindowClosedCommand = new DelegateCommand(WindowClosed);
+        WindowClosedCommand = new RelayCommand(WindowClosed);
     }
 
 

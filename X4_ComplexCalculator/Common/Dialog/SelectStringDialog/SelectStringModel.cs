@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Windows.Input;
@@ -89,8 +89,8 @@ class SelectStringDialogModel : ObservableObject
     {
         InputString = initialString;
         IsValidInput = isValidInput;
-        OkButtonClickedCommand = new DelegateCommand(OnOkButtonClick);
-        CancelButtonClickedCommand = new DelegateCommand(OnCancelButtonClicked);
+        OkButtonClickedCommand = new RelayCommand(OnOkButtonClick);
+        CancelButtonClickedCommand = new RelayCommand(OnCancelButtonClicked);
     }
 
 

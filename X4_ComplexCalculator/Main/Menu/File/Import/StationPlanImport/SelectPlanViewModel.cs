@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -95,9 +95,9 @@ class SelectPlanViewModel : ObservableObject
         _Model.PropertyChanged += Model_PropertyChanged;
         _SelectedPlanItems = planItems;
 
-        OkButtonClickedCommand     = new DelegateCommand(OkButtonClicked);
-        CancelButtonClickedCommand = new DelegateCommand(CancelButtonClicked);
-        SelectPlanFileCommand      = new DelegateCommand(_Model.SelectPlanFile);
+        OkButtonClickedCommand     = new RelayCommand(OkButtonClicked);
+        CancelButtonClickedCommand = new RelayCommand(CancelButtonClicked);
+        SelectPlanFileCommand      = new RelayCommand(_Model.SelectPlanFile);
     }
 
 

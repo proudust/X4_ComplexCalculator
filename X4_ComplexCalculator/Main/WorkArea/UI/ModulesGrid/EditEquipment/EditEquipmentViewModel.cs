@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -160,13 +160,13 @@ class EditEquipmentViewModel : ObservableObject, IDisposable
 
 
         // コマンド類
-        SaveButtonClickedCommand = new DelegateCommand(SavebuttonClicked);
-        CloseWindowCommand       = new DelegateCommand(CloseWindow);
-        OverwritePresetCommand   = new DelegateCommand(_Model.OverwritePreset);
-        EditPresetNameCommand    = new DelegateCommand(_Model.EditPresetName);
-        AddPresetCommand         = new DelegateCommand(_Model.AddPreset);
-        DeletePresetCommand      = new DelegateCommand(_Model.DeletePreset);
-        WindowClosingCommand     = new DelegateCommand<CancelEventArgs>(WindowClosing);
+        SaveButtonClickedCommand = new RelayCommand(SavebuttonClicked);
+        CloseWindowCommand       = new RelayCommand(CloseWindow);
+        OverwritePresetCommand   = new RelayCommand(_Model.OverwritePreset);
+        EditPresetNameCommand    = new RelayCommand(_Model.EditPresetName);
+        AddPresetCommand         = new RelayCommand(_Model.AddPreset);
+        DeletePresetCommand      = new RelayCommand(_Model.DeletePreset);
+        WindowClosingCommand     = new RelayCommand<CancelEventArgs>(WindowClosing);
 
 
         // その他初期化

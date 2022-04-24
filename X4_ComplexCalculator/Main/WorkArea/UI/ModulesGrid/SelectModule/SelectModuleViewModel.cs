@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
@@ -159,9 +159,9 @@ class SelectModuleViewModel : ObservableObject
         ModuleOwnersView.GroupDescriptions.Clear();
         ModuleOwnersView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(FactionsListItem.RaceID)));
 
-        OKButtonClickedCommand    = new DelegateCommand(OKButtonClicked);
-        CloseButtonClickedCommand = new DelegateCommand(CloseWindow);
-        WindowClosingCommand      = new DelegateCommand<CancelEventArgs>(WindowClosing);
+        OKButtonClickedCommand    = new RelayCommand(OKButtonClicked);
+        CloseButtonClickedCommand = new RelayCommand(CloseWindow);
+        WindowClosingCommand      = new RelayCommand<CancelEventArgs>(WindowClosing);
 
         // 親ウィンドウが閉じられたときに子のウィンドウも閉じるようにする
         Application.Current.MainWindow.Closed += MainWindow_Closed;

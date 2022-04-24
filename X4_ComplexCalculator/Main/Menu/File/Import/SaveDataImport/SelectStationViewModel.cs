@@ -1,4 +1,4 @@
-using Prism.Commands;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -113,9 +113,9 @@ class SelectStationViewModel : ObservableObject
     {
         _Model = new SelectStationModel();
         _SelectedStationItems = stationItems;
-        OkButtonClickedCommand      = new DelegateCommand(OkButtonClicked);
-        CancelButtonClickedCommand  = new DelegateCommand(CancelButtonClicked);
-        SelectSaveDataFileCommand   = new DelegateCommand(_Model.SelectSaveDataFile);
+        OkButtonClickedCommand      = new RelayCommand(OkButtonClicked);
+        CancelButtonClickedCommand  = new RelayCommand(CancelButtonClicked);
+        SelectSaveDataFileCommand   = new RelayCommand(_Model.SelectSaveDataFile);
     }
 
 

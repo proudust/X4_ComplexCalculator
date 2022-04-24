@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
@@ -151,10 +151,10 @@ public class ProductsGridViewModel : ObservableObject, IDisposable
         ProductsView.SortDescriptions.Add(new SortDescription("Ware.WareGroup.Tier", ListSortDirection.Ascending));
         ProductsView.SortDescriptions.Add(new SortDescription("Ware.Name", ListSortDirection.Ascending));
 
-        SetSelectedExpandedCommand = new DelegateCommand<bool?>(SetSelectedExpanded);
-        AutoAddModuleCommand = new DelegateCommand(_Model.AutoAddModule);
-        SetNoBuyToSelectedItemCommand = new DelegateCommand<bool?>(SetNoBuyToSelectedItem);
-        SetNoSellToSelectedItemCommand = new DelegateCommand<bool?>(SetNoSellToSelectedItem);
+        SetSelectedExpandedCommand = new RelayCommand<bool?>(SetSelectedExpanded);
+        AutoAddModuleCommand = new RelayCommand(_Model.AutoAddModule);
+        SetNoBuyToSelectedItemCommand = new RelayCommand<bool?>(SetNoBuyToSelectedItem);
+        SetNoSellToSelectedItemCommand = new RelayCommand<bool?>(SetNoSellToSelectedItem);
     }
 
 
