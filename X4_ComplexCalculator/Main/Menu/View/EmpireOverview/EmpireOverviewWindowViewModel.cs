@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -11,7 +11,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.EmpireOverview;
 /// <summary>
 /// 帝国の概要用ViewModel
 /// </summary>
-class EmpireOverviewWindowViewModel : BindableBase
+class EmpireOverviewWindowViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>

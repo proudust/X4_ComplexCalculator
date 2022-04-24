@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -11,7 +11,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Modules;
 /// <summary>
 /// モジュール情報閲覧用ViewModel
 /// </summary>
-class ModulesGridViewModel : BindableBase
+class ModulesGridViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>

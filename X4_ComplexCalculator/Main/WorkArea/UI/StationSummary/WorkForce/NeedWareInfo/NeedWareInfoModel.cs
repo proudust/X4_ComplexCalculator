@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -18,7 +18,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.NeedWar
 /// <summary>
 /// 必要ウェア情報
 /// </summary>
-class NeedWareInfoModel : BindableBase, IDisposable
+class NeedWareInfoModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

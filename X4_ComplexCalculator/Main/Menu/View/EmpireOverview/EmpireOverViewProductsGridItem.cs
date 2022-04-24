@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.Menu.View.EmpireOverview;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.EmpireOverview;
 /// <summary>
 /// 帝国の概要の製品一覧DataGridの1レコード分
 /// </summary>
-public class EmpireOverViewProductsGridItem : BindableBase
+public class EmpireOverViewProductsGridItem : ObservableObject
 {
     #region メンバ
     /// <summary>

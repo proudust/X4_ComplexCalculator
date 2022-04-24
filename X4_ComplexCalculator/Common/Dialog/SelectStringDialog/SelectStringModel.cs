@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Windows.Input;
 
@@ -8,7 +8,7 @@ namespace X4_ComplexCalculator.Common.Dialog.SelectStringDialog;
 /// <summary>
 /// 文字列選択ダイアログのModel
 /// </summary>
-class SelectStringDialogModel : BindableBase
+class SelectStringDialogModel : ObservableObject
 {
     #region メンバ
     /// <summary>

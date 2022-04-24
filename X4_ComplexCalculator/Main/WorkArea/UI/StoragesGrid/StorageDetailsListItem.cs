@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.StoragesGrid;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StoragesGrid;
 /// <summary>
 /// ドロップダウンで表示するListViewのアイテム(保管庫用)
 /// </summary>
-public class StorageDetailsListItem : BindableBase
+public class StorageDetailsListItem : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -52,7 +52,7 @@ public class StorageDetailsListItem : BindableBase
         {
             if (SetProperty(ref _ModuleCount, value))
             {
-                RaisePropertyChanged(nameof(TotalCapacity));
+                OnPropertyChanged(nameof(TotalCapacity));
             }
         }
     }

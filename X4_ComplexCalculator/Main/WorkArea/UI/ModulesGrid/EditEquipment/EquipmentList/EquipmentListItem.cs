@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment.EquipmentList;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment.Equipm
 /// <summary>
 /// 兵装編集画面の装備品一覧1レコード分
 /// </summary>
-class EquipmentListItem : BindableBase
+class EquipmentListItem : ObservableObject
 {
     #region メンバ
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Globalization;
@@ -8,7 +8,7 @@ namespace X4_ComplexCalculator.Main.Menu.Lang;
 /// <summary>
 /// 言語メニュー1レコード分
 /// </summary>
-public class LangMenuItem : BindableBase
+public class LangMenuItem : ObservableObject
 {
     #region プロパティ
     /// <summary>

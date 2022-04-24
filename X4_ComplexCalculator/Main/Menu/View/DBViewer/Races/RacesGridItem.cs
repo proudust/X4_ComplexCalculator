@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Races;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Races;
 /// <summary>
 /// 種族表示用DataGridの1レコード分
 /// </summary>
-class RacesGridItem : BindableBase
+class RacesGridItem : ObservableObject
 {
     #region メンバ
     /// <summary>

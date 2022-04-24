@@ -1,8 +1,8 @@
-﻿using AvalonDock;
+using AvalonDock;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +30,7 @@ namespace X4_ComplexCalculator.Main.WorkArea;
 /// <summary>
 /// 作業エリア用ViewModel
 /// </summary>
-public class WorkAreaViewModel : BindableBase, IDisposable
+public class WorkAreaViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>
@@ -408,12 +408,12 @@ public class WorkAreaViewModel : BindableBase, IDisposable
         switch (e.PropertyName)
         {
             case nameof(_Model.HasChanged):
-                RaisePropertyChanged(nameof(HasChanged));
-                RaisePropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(HasChanged));
+                OnPropertyChanged(nameof(Title));
                 break;
 
             case nameof(_Model.Title):
-                RaisePropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(Title));
                 break;
 
             default:

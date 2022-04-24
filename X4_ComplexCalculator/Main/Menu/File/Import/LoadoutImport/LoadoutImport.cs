@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 using X4_ComplexCalculator.Main.WorkArea;
 
@@ -7,7 +7,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport;
 /// <summary>
 /// 装備をインポート
 /// </summary>
-class LoadoutImport : BindableBase, IImport
+class LoadoutImport : ObservableObject, IImport
 {
     /// <summary>
     /// メニュー表示用タイトル

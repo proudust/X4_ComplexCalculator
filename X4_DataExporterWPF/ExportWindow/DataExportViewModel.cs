@@ -1,5 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using Reactive.Bindings.Notifiers;
@@ -17,7 +17,7 @@ namespace X4_DataExporterWPF.DataExportWindow;
 /// <summary>
 /// データ抽出処理用ViewModel
 /// </summary>
-class DataExportViewModel : BindableBase
+class DataExportViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>

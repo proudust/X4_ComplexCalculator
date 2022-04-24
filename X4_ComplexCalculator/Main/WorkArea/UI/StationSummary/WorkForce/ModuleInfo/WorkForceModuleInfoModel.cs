@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -15,7 +15,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.ModuleI
 /// <summary>
 /// 労働力用モジュール情報用Model
 /// </summary>
-class WorkForceModuleInfoModel : BindableBase
+class WorkForceModuleInfoModel : ObservableObject
 {
     #region メンバ
     /// <summary>

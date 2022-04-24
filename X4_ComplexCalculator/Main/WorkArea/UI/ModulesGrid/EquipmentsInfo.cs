@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using System.Text;
 using X4_ComplexCalculator.Entity;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 
 /// <summary>
 /// 装備情報
 /// </summary>
-public class EquipmentsInfo : BindableBase
+public class EquipmentsInfo : ObservableObject
 {
     #region メンバ 
     /// <summary>

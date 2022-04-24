@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -10,7 +10,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Wares;
 /// <summary>
 /// ウェア情報閲覧用ViewModel
 /// </summary>
-class WaresViewModel : BindableBase
+class WaresViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>

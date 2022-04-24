@@ -1,9 +1,9 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.SelectModule;
 
-public class ModulesListItem : BindableBase
+public class ModulesListItem : ObservableObject
 {
     #region メンバ
     /// <summary>

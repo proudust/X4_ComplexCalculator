@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment;
 /// <summary>
 /// 派閥リストの1レコード分
 /// </summary>
-class FactionsListItem : BindableBase
+class FactionsListItem : ObservableObject
 {
     #region メンバ
     /// <summary>

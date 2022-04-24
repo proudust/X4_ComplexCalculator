@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Xml.Linq;
 
 namespace X4_ComplexCalculator.Main.Menu.File.Import.StationPlanImport;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.StationPlanImport;
 /// <summary>
 /// ステーション計画1レコード分
 /// </summary>
-public class StationPlanItem : BindableBase
+public class StationPlanItem : ObservableObject
 {
     #region メンバ
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +17,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport;
 /// <summary>
 /// モジュール装備インポート画面のModel
 /// </summary>
-class LoadoutImportModel : BindableBase
+class LoadoutImportModel : ObservableObject
 {
     #region メンバ
     /// <summary>

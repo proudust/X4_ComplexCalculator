@@ -1,5 +1,5 @@
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -7,7 +7,7 @@ using X4_ComplexCalculator.Main.WorkArea.WorkAreaData;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 
-public class ModulesGridViewModel : BindableBase, IDisposable
+public class ModulesGridViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

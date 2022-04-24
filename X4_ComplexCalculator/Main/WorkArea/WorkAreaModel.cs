@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ namespace X4_ComplexCalculator.Main.WorkArea;
 /// <summary>
 /// 作業エリア用Model
 /// </summary>
-class WorkAreaModel : BindableBase, IDisposable, IWorkArea
+class WorkAreaModel : ObservableObject, IDisposable, IWorkArea
 {
     #region メンバ
     /// <summary>

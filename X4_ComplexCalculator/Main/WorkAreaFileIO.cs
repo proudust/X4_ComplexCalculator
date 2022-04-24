@@ -1,5 +1,5 @@
-﻿using Microsoft.Win32;
-using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace X4_ComplexCalculator.Main;
 /// <summary>
 /// WorkAreaのファイル読み書き処理用クラス
 /// </summary>
-class WorkAreaFileIO : BindableBase
+class WorkAreaFileIO : ObservableObject
 {
     #region メンバ
     /// <summary>

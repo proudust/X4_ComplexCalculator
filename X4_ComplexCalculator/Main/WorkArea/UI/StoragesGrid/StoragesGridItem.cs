@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using X4_ComplexCalculator.Common;
@@ -10,7 +10,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StoragesGrid;
 /// <summary>
 /// 保管庫一覧表示用DataGridViewの1レコード分
 /// </summary>
-public class StoragesGridItem : BindableBase, ISelectable
+public class StoragesGridItem : ObservableObject, ISelectable
 {
     #region メンバ
     /// <summary>
@@ -93,7 +93,7 @@ public class StoragesGridItem : BindableBase, ISelectable
 
         Details.AddRange(addItems);
 
-        RaisePropertyChanged(nameof(Capacity));
+        OnPropertyChanged(nameof(Capacity));
     }
 
 
@@ -114,7 +114,7 @@ public class StoragesGridItem : BindableBase, ISelectable
 
         Details.RemoveAll(x => x.ModuleCount == 0);
 
-        RaisePropertyChanged(nameof(Capacity));
+        OnPropertyChanged(nameof(Capacity));
     }
 
 
@@ -134,6 +134,6 @@ public class StoragesGridItem : BindableBase, ISelectable
             }
         }
 
-        RaisePropertyChanged(nameof(Capacity));
+        OnPropertyChanged(nameof(Capacity));
     }
 }

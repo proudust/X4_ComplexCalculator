@@ -1,5 +1,5 @@
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace X4_ComplexCalculator.Main.Menu.File.Import.StationPlanImport;
 
-class SelectPlanViewModel : BindableBase
+class SelectPlanViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -111,7 +111,7 @@ class SelectPlanViewModel : BindableBase
         switch (e.PropertyName)
         {
             case nameof(SelectPlanModel.PlanFilePath):
-                RaisePropertyChanged(nameof(PlanFilePath));
+                OnPropertyChanged(nameof(PlanFilePath));
                 break;
 
             default:

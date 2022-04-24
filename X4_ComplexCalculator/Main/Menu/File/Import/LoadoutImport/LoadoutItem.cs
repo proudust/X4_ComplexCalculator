@@ -1,4 +1,4 @@
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.LoadoutImport;
 /// <summary>
 /// 装備一覧アイテム1レコード分
 /// </summary>
-public class LoadoutItem : BindableBase
+public class LoadoutItem : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -75,7 +75,7 @@ public class LoadoutItem : BindableBase
             // インポートされた直後の場合、チェックを外す
             if (SetProperty(ref _Imported, value) && value)
             {
-                RaisePropertyChanged(nameof(IsChecked));
+                OnPropertyChanged(nameof(IsChecked));
             }
         }
     }

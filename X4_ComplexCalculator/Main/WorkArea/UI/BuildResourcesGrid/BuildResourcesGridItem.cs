@@ -8,7 +8,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.BuildResourcesGrid;
 /// <summary>
 /// 建造に必要なウェアを表示するDataGridViewの1レコード分のクラス
 /// </summary>
-public class BuildResourcesGridItem : BindableBaseEx, IEditable, ISelectable
+public class BuildResourcesGridItem : ObservableObjectEx, IEditable, ISelectable
 {
     #region メンバ
     /// <summary>
@@ -54,7 +54,7 @@ public class BuildResourcesGridItem : BindableBaseEx, IEditable, ISelectable
             var oldPrice = Price;
             if (SetProperty(ref _Amount, value))
             {
-                RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+                OnPropertyChangedEx(oldPrice, Price, nameof(Price));
             }
         }
     }
@@ -102,11 +102,11 @@ public class BuildResourcesGridItem : BindableBaseEx, IEditable, ISelectable
             var oldPrice = Price;
             _UnitPrice = setValue;
 
-            RaisePropertyChangedEx(oldUnitPrice, setValue);
+            OnPropertyChangedEx(oldUnitPrice, setValue);
 
             if (!NoBuy)
             {
-                RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+                OnPropertyChangedEx(oldPrice, Price, nameof(Price));
             }
 
             EditStatus = EditStatus.Edited;
@@ -132,7 +132,7 @@ public class BuildResourcesGridItem : BindableBaseEx, IEditable, ISelectable
 
             if (SetProperty(ref _NoBuy, value))
             {
-                RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+                OnPropertyChangedEx(oldPrice, Price, nameof(Price));
                 EditStatus = EditStatus.Edited;
             }
         }

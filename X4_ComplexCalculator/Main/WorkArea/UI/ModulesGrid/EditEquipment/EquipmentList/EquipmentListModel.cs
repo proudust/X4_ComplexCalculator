@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using System;
 using System.Data;
@@ -14,7 +14,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment.Equipm
 /// <summary>
 /// 装備リストのModel
 /// </summary>
-class EquipmentListModel : BindableBase
+class EquipmentListModel : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -102,8 +102,8 @@ class EquipmentListModel : BindableBase
         SelectedSize = new(size);
         SelectedSize.Subscribe(_ => 
         {
-            RaisePropertyChanged(nameof(MaxAmount));
-            RaisePropertyChanged(nameof(EquippedCount));
+            OnPropertyChanged(nameof(MaxAmount));
+            OnPropertyChanged(nameof(EquippedCount));
         });
 
 
@@ -173,7 +173,7 @@ class EquipmentListModel : BindableBase
         if (added)
         {
             Unsaved.Value = true;
-            RaisePropertyChanged(nameof(EquippedCount));
+            OnPropertyChanged(nameof(EquippedCount));
         }
 
         return added;
@@ -196,7 +196,7 @@ class EquipmentListModel : BindableBase
         {
             _TempManager.RemoveRange(Equipped.Where(x => x.IsSelected).Select(x => x.Equipment));
             Equipped.RemoveAll(x => x.IsSelected);
-            RaisePropertyChanged(nameof(EquippedCount));
+            OnPropertyChanged(nameof(EquippedCount));
             Unsaved.Value = true;
         }
 
@@ -239,7 +239,7 @@ WHERE
         _TempManager.ResetEquipment(equipments.Select(x => x.Equipment));
 
 
-        RaisePropertyChanged(nameof(EquippedCount));
+        OnPropertyChanged(nameof(EquippedCount));
         Unsaved.Value = true;
     }
 }

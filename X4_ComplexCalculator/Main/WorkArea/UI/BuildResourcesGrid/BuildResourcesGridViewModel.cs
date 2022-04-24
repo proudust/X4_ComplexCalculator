@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.BuildResourcesGrid;
 /// <summary>
 /// 建造に必要なリソースを表示するDataGridView用ViewModel
 /// </summary>
-public class BuildResourcesGridViewModel : BindableBase, IDisposable
+public class BuildResourcesGridViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>
@@ -69,7 +69,7 @@ public class BuildResourcesGridViewModel : BindableBase, IDisposable
                 resource.SetUnitPricePercent(_UnitPricePercent);
             }
 
-            RaisePropertyChanged();
+            OnPropertyChanged();
         }
     }
 

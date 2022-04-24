@@ -5,7 +5,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.WorkAreaData.StationSettings;
 /// <summary>
 /// 労働者数を管理するクラス
 /// </summary>
-public class WorkforceManager : BindableBaseEx
+public class WorkforceManager : ObservableObjectEx
 {
     #region メンバ
     /// <summary>
@@ -45,7 +45,7 @@ public class WorkforceManager : BindableBaseEx
             var oldProportion = Proportion;
             if (SetPropertyEx(ref _Actual, value))
             {
-                RaisePropertyChangedEx(oldProportion, Proportion, nameof(Proportion));
+                OnPropertyChangedEx(oldProportion, Proportion, nameof(Proportion));
             }
         }
     }
@@ -62,7 +62,7 @@ public class WorkforceManager : BindableBaseEx
             var oldProportion = Proportion;
             if (SetPropertyEx(ref _Need, value))
             {
-                RaisePropertyChangedEx(oldProportion, Proportion, nameof(Proportion));
+                OnPropertyChangedEx(oldProportion, Proportion, nameof(Proportion));
             }
         }
     }

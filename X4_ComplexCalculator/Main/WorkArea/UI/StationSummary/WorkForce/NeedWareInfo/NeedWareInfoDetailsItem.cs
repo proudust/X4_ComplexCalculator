@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using X4_ComplexCalculator.DB;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
@@ -7,7 +7,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.WorkForce.NeedWar
 /// <summary>
 /// 必要ウェア詳細情報1レコード分
 /// </summary>
-class NeedWareInfoDetailsItem : BindableBase
+class NeedWareInfoDetailsItem : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -64,7 +64,7 @@ class NeedWareInfoDetailsItem : BindableBase
         {
             if (SetProperty(ref _NeedAmount, value))
             {
-                RaisePropertyChanged(nameof(Diff));
+                OnPropertyChanged(nameof(Diff));
             }
         }
     }
@@ -90,7 +90,7 @@ class NeedWareInfoDetailsItem : BindableBase
         {
             if (SetProperty(ref _ProductionAmount, value))
             {
-                RaisePropertyChanged(nameof(Diff));
+                OnPropertyChanged(nameof(Diff));
             }
         }
     }

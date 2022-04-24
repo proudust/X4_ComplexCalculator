@@ -1,5 +1,5 @@
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.SelectModule;
 
-class SelectModuleViewModel : BindableBase
+class SelectModuleViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -51,7 +51,7 @@ class SelectModuleViewModel : BindableBase
         set
         {
             _CloseWindow = value;
-            RaisePropertyChanged();
+            OnPropertyChanged();
         }
     }
 
@@ -109,7 +109,7 @@ class SelectModuleViewModel : BindableBase
             if (_SearchModuleName != value)
             {
                 _SearchModuleName = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
                 ModulesView.Refresh();
             }
         }

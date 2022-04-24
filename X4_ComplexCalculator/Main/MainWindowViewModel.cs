@@ -1,7 +1,7 @@
 ﻿using AvalonDock;
 using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace X4_ComplexCalculator.Main;
 /// <summary>
 /// メイン画面のViewModel
 /// </summary>
-class MainWindowViewModel : BindableBase, IDropTarget
+class MainWindowViewModel : ObservableObject, IDropTarget
 {
     #region メンバ
     /// <summary>
@@ -354,15 +354,15 @@ class MainWindowViewModel : BindableBase, IDropTarget
         switch (e.PropertyName)
         {
             case nameof(_WorkAreaFileIO.IsBusy):
-                RaisePropertyChanged(nameof(FileLoadingIsBusy));
+                OnPropertyChanged(nameof(FileLoadingIsBusy));
                 break;
 
             case nameof(_WorkAreaFileIO.Progress):
-                RaisePropertyChanged(nameof(FileLoadingProgress));
+                OnPropertyChanged(nameof(FileLoadingProgress));
                 break;
 
             case nameof(_WorkAreaFileIO.LoadingFileName):
-                RaisePropertyChanged(nameof(LoadingFileName));
+                OnPropertyChanged(nameof(LoadingFileName));
                 break;
 
             default:
@@ -377,7 +377,7 @@ class MainWindowViewModel : BindableBase, IDropTarget
     private void CreateNew()
     {
         _WorkAreaFileIO.CreateNew();
-        RaisePropertyChanged(nameof(ActiveContent));
+        OnPropertyChanged(nameof(ActiveContent));
     }
 
 
@@ -387,7 +387,7 @@ class MainWindowViewModel : BindableBase, IDropTarget
     private void Open()
     {
         _WorkAreaFileIO.Open();
-        RaisePropertyChanged(nameof(ActiveContent));
+        OnPropertyChanged(nameof(ActiveContent));
     }
 
 

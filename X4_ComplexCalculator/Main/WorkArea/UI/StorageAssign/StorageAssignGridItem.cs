@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using X4_ComplexCalculator.Common.EditStatus;
@@ -9,7 +9,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StorageAssign;
 /// <summary>
 /// 保管庫割当用Gridの1レコード分
 /// </summary>
-public class StorageAssignGridItem : BindableBase, IDisposable, IEditable
+public class StorageAssignGridItem : ObservableObject, IDisposable, IEditable
 {
     #region メンバ
     /// <summary>
@@ -91,8 +91,8 @@ public class StorageAssignGridItem : BindableBase, IDisposable, IEditable
 
             if (SetProperty(ref _AllocCount, value))
             {
-                RaisePropertyChanged(nameof(AllocCapacity));
-                RaisePropertyChanged(nameof(StorageStatus));
+                OnPropertyChanged(nameof(AllocCapacity));
+                OnPropertyChanged(nameof(StorageStatus));
                 CapacityInfo.UsedCapacity += (value - prevCount) * Volume;
                 EditStatus = EditStatus.Edited;
             }
@@ -135,8 +135,8 @@ public class StorageAssignGridItem : BindableBase, IDisposable, IEditable
         {
             if (SetProperty(ref _ProductPerHour, value))
             {
-                RaisePropertyChanged(nameof(AfterCount));
-                RaisePropertyChanged(nameof(StorageStatus));
+                OnPropertyChanged(nameof(AfterCount));
+                OnPropertyChanged(nameof(StorageStatus));
             }
         }
     }
@@ -152,8 +152,8 @@ public class StorageAssignGridItem : BindableBase, IDisposable, IEditable
         {
             if (SetProperty(ref _Hour, value))
             {
-                RaisePropertyChanged(nameof(AfterCount));
-                RaisePropertyChanged(nameof(StorageStatus));
+                OnPropertyChanged(nameof(AfterCount));
+                OnPropertyChanged(nameof(StorageStatus));
             }
         }
     }
@@ -211,8 +211,8 @@ public class StorageAssignGridItem : BindableBase, IDisposable, IEditable
         switch (e.PropertyName)
         {
             case nameof(StorageCapacityInfo.FreeCapacity):
-                RaisePropertyChanged(nameof(AllocableCount));
-                RaisePropertyChanged(nameof(MaxAllocableCount));
+                OnPropertyChanged(nameof(AllocableCount));
+                OnPropertyChanged(nameof(MaxAllocableCount));
                 break;
 
             default:

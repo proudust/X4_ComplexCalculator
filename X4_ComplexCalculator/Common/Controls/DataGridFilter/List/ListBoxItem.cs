@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X4_ComplexCalculator.Common.Controls.DataGridFilter.List;
 
 /// <summary>
 /// リスト用のアイテム
 /// </summary>
-class ListBoxItem : BindableBase
+class ListBoxItem : ObservableObject
 {
     #region メンバ
     /// <summary>

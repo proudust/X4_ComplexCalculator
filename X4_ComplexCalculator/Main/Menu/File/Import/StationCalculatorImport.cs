@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import;
 /// <summary>
 /// Station Calculatorからインポートする
 /// </summary>
-class StationCalculatorImport : BindableBase, IImport
+class StationCalculatorImport : ObservableObject, IImport
 {
     #region メンバ
     /// <summary>

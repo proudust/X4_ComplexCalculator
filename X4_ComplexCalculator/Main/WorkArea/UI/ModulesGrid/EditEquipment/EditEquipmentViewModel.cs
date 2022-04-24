@@ -1,5 +1,5 @@
 using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
@@ -22,7 +22,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment;
 /// <summary>
 /// 装備編集画面のViewModel
 /// </summary>
-class EditEquipmentViewModel : BindableBase, IDisposable
+class EditEquipmentViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>
@@ -63,7 +63,7 @@ class EditEquipmentViewModel : BindableBase, IDisposable
         set
         {
             _CloseWindow = value;
-            RaisePropertyChanged();
+            OnPropertyChanged();
         }
     }
 

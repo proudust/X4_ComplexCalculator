@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid;
 /// <summary>
 /// 製品一覧用DataGridViewのViewModel
 /// </summary>
-public class ProductsGridViewModel : BindableBase, IDisposable
+public class ProductsGridViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>
@@ -69,7 +69,7 @@ public class ProductsGridViewModel : BindableBase, IDisposable
                 product.SetUnitPricePercent(_UnitPricePercent);
             }
 
-            RaisePropertyChanged();
+            OnPropertyChanged();
         }
     }
 

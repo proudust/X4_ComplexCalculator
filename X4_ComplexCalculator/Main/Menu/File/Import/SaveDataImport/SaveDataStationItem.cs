@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Xml.Linq;
 
 namespace X4_ComplexCalculator.Main.Menu.File.Import.SaveDataImport;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Import.SaveDataImport;
 /// <summary>
 /// X4 セーブデータインポート時のステーション一覧1レコード分
 /// </summary>
-public class SaveDataStationItem : BindableBase
+public class SaveDataStationItem : ObservableObject
 {
     #region メンバ
     /// <summary>

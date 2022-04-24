@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StoragesGrid;
 /// <summary>
 /// 保管庫一覧表示用DataGridViewのViewModel
 /// </summary>
-public class StoragesGridViewModel : BindableBase, IDisposable
+public class StoragesGridViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Data;
@@ -12,7 +12,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 /// <summary>
 /// モジュール一覧の入れ替えを行うクラス
 /// </summary>
-public class ModulesReorder : BindableBase
+public class ModulesReorder : ObservableObject
 {
     #region メンバ
     /// <summary>

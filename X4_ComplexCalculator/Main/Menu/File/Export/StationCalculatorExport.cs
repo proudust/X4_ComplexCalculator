@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -10,7 +10,7 @@ namespace X4_ComplexCalculator.Main.Menu.File.Export;
 /// <summary>
 /// StationCalculator向けにステーションの情報をエクスポートする
 /// </summary>
-class StationCalculatorExport : BindableBase, IExport
+class StationCalculatorExport : ObservableObject, IExport
 {
     /// <summary>
     /// タイトル文字列

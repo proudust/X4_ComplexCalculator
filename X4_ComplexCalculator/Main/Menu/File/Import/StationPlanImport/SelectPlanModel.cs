@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,7 +13,7 @@ using X4_ComplexCalculator.Common.Localize;
 
 namespace X4_ComplexCalculator.Main.Menu.File.Import.StationPlanImport;
 
-class SelectPlanModel : BindableBase
+class SelectPlanModel : ObservableObject
 {
     #region メンバ
     /// <summary>

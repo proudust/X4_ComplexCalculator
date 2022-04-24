@@ -1,14 +1,14 @@
 ﻿
 
 
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment;
 
 /// <summary>
 /// プリセットコンボボックス用アイテム
 /// </summary>
-class PresetComboboxItem : BindableBase
+class PresetComboboxItem : ObservableObject
 {
     #region メンバ
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
@@ -9,7 +9,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid;
 /// <summary>
 /// 製品一覧DataGridの＋/－で表示するListViewのアイテム(生産品)
 /// </summary>
-public class ProductDetailsListItem : BindableBase, IProductDetailsListItem
+public class ProductDetailsListItem : ObservableObject, IProductDetailsListItem
 {
     #region メンバ
     /// <summary>
@@ -58,7 +58,7 @@ public class ProductDetailsListItem : BindableBase, IProductDetailsListItem
         {
             if (SetProperty(ref _ModuleCount, value))
             {
-                RaisePropertyChanged(nameof(Amount));
+                OnPropertyChanged(nameof(Amount));
             }
         }
     }
@@ -135,8 +135,8 @@ public class ProductDetailsListItem : BindableBase, IProductDetailsListItem
         if (_Efficiencies.ContainsKey(effectID))
         {
             _Efficiencies[effectID] = value;
-            RaisePropertyChanged(nameof(Amount));
-            RaisePropertyChanged(nameof(Efficiency));
+            OnPropertyChanged(nameof(Amount));
+            OnPropertyChanged(nameof(Efficiency));
         }
     }
 }

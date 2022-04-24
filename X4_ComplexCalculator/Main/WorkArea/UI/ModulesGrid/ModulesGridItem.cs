@@ -18,7 +18,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 /// <summary>
 /// Module一覧DataGridの1レコード分の情報を管理するクラス
 /// </summary>
-public class ModulesGridItem : BindableBaseEx, IEditable, ISelectable, IReorderble
+public class ModulesGridItem : ObservableObjectEx, IEditable, ISelectable, IReorderble
 {
     #region スタティックメンバ
     /// <summary>
@@ -148,7 +148,7 @@ public class ModulesGridItem : BindableBaseEx, IEditable, ISelectable, IReorderb
         {
             if (SetPropertyEx(ref _SelectedMethod, value))
             {
-                RaisePropertyChanged(nameof(SelectedMethodName));
+                OnPropertyChanged(nameof(SelectedMethodName));
                 EditStatus = EditStatus.Edited;
             }
         }
@@ -317,7 +317,7 @@ public class ModulesGridItem : BindableBaseEx, IEditable, ISelectable, IReorderb
                 .Where(x => x.EquipmentType.EquipmentTypeID == "shields")
                 .Select(x => x.ID)
                 .ToArray();
-            RaisePropertyChangedEx(turretsOld.Concat(shieldsOld), newItems, nameof(Equipments));
+            OnPropertyChangedEx(turretsOld.Concat(shieldsOld), newItems, nameof(Equipments));
             EditStatus = EditStatus.Edited;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,7 @@ using X4_ComplexCalculator.Common.Localize;
 
 namespace X4_ComplexCalculator.Main.Menu.File.Import.SaveDataImport;
 
-class SelectStationModel : BindableBase
+class SelectStationModel : ObservableObject
 {
     #region メンバ
     /// <summary>

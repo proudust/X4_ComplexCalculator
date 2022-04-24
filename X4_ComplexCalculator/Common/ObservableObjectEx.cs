@@ -1,10 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace X4_ComplexCalculator.Common;
 
-public abstract class BindableBaseEx : BindableBase
+public abstract class ObservableObjectEx : ObservableObject
 {
 
     /// <summary>
@@ -24,7 +24,7 @@ public abstract class BindableBaseEx : BindableBase
 
         T prevValue = storage;
         storage = value;
-        RaisePropertyChangedEx(prevValue, value, propertyName);
+        OnPropertyChangedEx(prevValue, value, propertyName);
 
         return true;
     }
@@ -37,7 +37,7 @@ public abstract class BindableBaseEx : BindableBase
     /// <param name="oldValue">前回値</param>
     /// <param name="newValue">今回値</param>
     /// <param name="propertyName">プロパティ名</param>
-    protected void RaisePropertyChangedEx<T>(T oldValue, T newValue, [CallerMemberName] string propertyName = "")
+    protected void OnPropertyChangedEx<T>(T oldValue, T newValue, [CallerMemberName] string propertyName = "")
     {
         OnPropertyChanged(new PropertyChangedExtendedEventArgs<T>(propertyName, oldValue, newValue));
     }

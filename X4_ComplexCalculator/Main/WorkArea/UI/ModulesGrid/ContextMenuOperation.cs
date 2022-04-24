@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid;
 /// <summary>
 /// モジュール一覧タブのコンテキストメニューの処理用クラス
 /// </summary>
-public class ContextMenuOperation : BindableBase, IDisposable
+public class ContextMenuOperation : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary;
 /// <summary>
 /// ステーション概要用ViewModel
 /// </summary>
-public class StationSummaryViewModel : BindableBase, IDisposable
+public class StationSummaryViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>
@@ -144,7 +144,7 @@ public class StationSummaryViewModel : BindableBase, IDisposable
         switch (e.PropertyName)
         {
             case nameof(ProfitModel.Profit):
-                RaisePropertyChanged(nameof(Profit));
+                OnPropertyChanged(nameof(Profit));
                 break;
 
             default:
@@ -163,7 +163,7 @@ public class StationSummaryViewModel : BindableBase, IDisposable
         switch (e.PropertyName)
         {
             case nameof(BuildingCostModel.BuildingCost):
-                RaisePropertyChanged(nameof(BuildingCost));
+                OnPropertyChanged(nameof(BuildingCost));
                 break;
 
             default:

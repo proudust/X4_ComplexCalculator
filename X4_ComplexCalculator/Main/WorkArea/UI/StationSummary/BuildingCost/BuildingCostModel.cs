@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StationSummary.BuildingCost;
 /// <summary>
 /// 建造コスト用
 /// </summary>
-class BuildingCostModel : BindableBase
+class BuildingCostModel : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -46,7 +46,7 @@ class BuildingCostModel : BindableBase
             if (value != _BuildingCost)
             {
                 _BuildingCost = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
     }

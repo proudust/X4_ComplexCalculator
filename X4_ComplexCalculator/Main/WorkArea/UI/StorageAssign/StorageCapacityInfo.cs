@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X4_ComplexCalculator.Main.WorkArea.UI.StorageAssign;
 
 /// <summary>
 /// 保管庫容量情報
 /// </summary>
-public class StorageCapacityInfo : BindableBase
+public class StorageCapacityInfo : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -32,7 +32,7 @@ public class StorageCapacityInfo : BindableBase
         {
             if (SetProperty(ref _TotalCapacity, value))
             {
-                RaisePropertyChanged(nameof(FreeCapacity));
+                OnPropertyChanged(nameof(FreeCapacity));
             }
         }
     }
@@ -48,7 +48,7 @@ public class StorageCapacityInfo : BindableBase
         {
             if (SetProperty(ref _UsedCapacity, value))
             {
-                RaisePropertyChanged(nameof(FreeCapacity));
+                OnPropertyChanged(nameof(FreeCapacity));
             }
         }
     }

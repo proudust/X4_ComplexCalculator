@@ -10,7 +10,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid;
 /// <summary>
 /// 製品一覧を表示するDataGridViewの1レコード分用クラス
 /// </summary>
-public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
+public class ProductsGridItem : ObservableObjectEx, IEditable, ISelectable
 {
     #region メンバ
     /// <summary>
@@ -95,8 +95,8 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             var oldPrice = Price;
             _UnitPrice = setValue;
 
-            RaisePropertyChangedEx(oldUnitPrice, setValue);
-            RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+            OnPropertyChangedEx(oldUnitPrice, setValue);
+            OnPropertyChangedEx(oldPrice, Price, nameof(Price));
             EditStatus = EditStatus.Edited;
         }
     }
@@ -147,7 +147,7 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             {
                 if (oldPrice != Price)
                 {
-                    RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+                    OnPropertyChangedEx(oldPrice, Price, nameof(Price));
                 }
                 EditStatus = EditStatus.Edited;
             }
@@ -169,7 +169,7 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             {
                 if (oldPrice != Price)
                 {
-                    RaisePropertyChangedEx(oldPrice, Price, nameof(Price));
+                    OnPropertyChangedEx(oldPrice, Price, nameof(Price));
                 }
                 EditStatus = EditStatus.Edited;
             }
@@ -254,14 +254,14 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             var newCount = Count;
             if (oldCount != newCount)
             {
-                RaisePropertyChangedEx(oldCount, newCount, nameof(Count));
+                OnPropertyChangedEx(oldCount, newCount, nameof(Count));
             }
         }
         {
             var newPrice = Price;
             if (oldPrice != newPrice)
             {
-                RaisePropertyChangedEx(oldPrice, newPrice, nameof(Price));
+                OnPropertyChangedEx(oldPrice, newPrice, nameof(Price));
             }
         }
     }
@@ -290,14 +290,14 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             var newCount = Count;
             if (oldCount != newCount)
             {
-                RaisePropertyChangedEx(oldCount, newCount, nameof(Count));
+                OnPropertyChangedEx(oldCount, newCount, nameof(Count));
             }
         }
         {
             var newPrice = Price;
             if (oldPrice != newPrice)
             {
-                RaisePropertyChangedEx(oldPrice, newPrice, nameof(Price));
+                OnPropertyChangedEx(oldPrice, newPrice, nameof(Price));
             }
         }
     }
@@ -329,14 +329,14 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             var newCount = Count;
             if (oldCount != newCount)
             {
-                RaisePropertyChangedEx(oldCount, newCount, nameof(Count));
+                OnPropertyChangedEx(oldCount, newCount, nameof(Count));
             }
         }
         {
             var newPrice = Price;
             if (oldPrice != newPrice)
             {
-                RaisePropertyChangedEx(oldPrice, newPrice, nameof(Price));
+                OnPropertyChangedEx(oldPrice, newPrice, nameof(Price));
             }
         }
     }
@@ -362,14 +362,14 @@ public class ProductsGridItem : BindableBaseEx, IEditable, ISelectable
             var newCount = Count;
             if (oldCount != newCount)
             {
-                RaisePropertyChangedEx(oldCount, newCount, nameof(Count));
+                OnPropertyChangedEx(oldCount, newCount, nameof(Count));
             }
         }
         {
             var newPrice = Price;
             if (oldPrice != newPrice)
             {
-                RaisePropertyChangedEx(oldPrice, newPrice, nameof(Price));
+                OnPropertyChangedEx(oldPrice, newPrice, nameof(Price));
             }
         }
     }

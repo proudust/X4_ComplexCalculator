@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
 using X4_ComplexCalculator.DB;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
@@ -8,7 +8,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Modules;
 /// <summary>
 /// モジュール一覧表示用DataGridの1レコード分
 /// </summary>
-class ModulesGridItem : BindableBase
+class ModulesGridItem : ObservableObject
 {
     #region メンバ
     /// <summary>

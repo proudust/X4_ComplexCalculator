@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Ships;
 /// <summary>
 /// 艦船一覧表示用DataGridの1レコード分
 /// </summary>
-class ShipsGridItem : BindableBase
+class ShipsGridItem : ObservableObject
 {
     #region メンバ
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
@@ -16,7 +16,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ModulesGrid.EditEquipment.Equipm
 /// <summary>
 /// 装備一覧用ViewModel
 /// </summary>
-class EquipmentListViewModel : BindableBase, IDisposable
+class EquipmentListViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

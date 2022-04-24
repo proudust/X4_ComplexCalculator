@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -9,7 +9,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.StorageAssign;
 /// <summary>
 /// 保管庫割当用ViewModel
 /// </summary>
-public class StorageAssignViewModel : BindableBase, IDisposable
+public class StorageAssignViewModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

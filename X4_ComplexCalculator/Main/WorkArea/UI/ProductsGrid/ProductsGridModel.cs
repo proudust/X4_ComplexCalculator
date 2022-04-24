@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +23,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.UI.ProductsGrid;
 /// <summary>
 /// 製品一覧用DataGridViewのModel
 /// </summary>
-class ProductsGridModel : BindableBase, IDisposable
+class ProductsGridModel : ObservableObject, IDisposable
 {
     #region メンバ
     /// <summary>

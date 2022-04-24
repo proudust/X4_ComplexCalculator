@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using X4_ComplexCalculator.DB.X4DB.Interfaces;
 
@@ -7,7 +7,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Wares;
 /// <summary>
 /// ウェア閲覧用DataGridの1レコード分
 /// </summary>
-class WaresGridItem : BindableBase
+class WaresGridItem : ObservableObject
 {
     #region メンバ
     /// <summary>

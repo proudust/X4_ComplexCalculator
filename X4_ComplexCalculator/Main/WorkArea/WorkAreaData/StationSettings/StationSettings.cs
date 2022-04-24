@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace X4_ComplexCalculator.Main.WorkArea.WorkAreaData.StationSettings;
@@ -6,7 +6,7 @@ namespace X4_ComplexCalculator.Main.WorkArea.WorkAreaData.StationSettings;
 /// <summary>
 /// ステーション設定用クラス
 /// </summary>
-public class StationSettings : BindableBase, IStationSettings
+public class StationSettings : ObservableObject, IStationSettings
 {
     #region メンバ
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -11,7 +11,7 @@ namespace X4_ComplexCalculator.Main.Menu.View.DBViewer.Ships;
 /// <summary>
 /// 艦船情報用ViewModel
 /// </summary>
-class ShipsViewModel : BindableBase
+class ShipsViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>
