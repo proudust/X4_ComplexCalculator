@@ -18,10 +18,10 @@
     <Window.Style>
         <Style TargetType="Window">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding CanOperation.Value, Mode=OneWay}" Value="true">
+                <DataTrigger Binding="{Binding CanOperation, Mode=OneWay}" Value="true">
                     <Setter Property="Cursor" Value="Arrow" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding CanOperation.Value, Mode=OneWay}" Value="false">
+                <DataTrigger Binding="{Binding CanOperation, Mode=OneWay}" Value="false">
                     <Setter Property="Cursor" Value="Wait" />
                 </DataTrigger>
             </Style.Triggers>
@@ -65,7 +65,7 @@
                     Grid.Column="0"
                     Background="WhiteSmoke"
                     IsReadOnly="True"
-                    Text="{Binding InDirPath.Value}" />
+                    Text="{Binding InDirPath}" />
 
                 <Button
                     Grid.Row="1"
@@ -104,9 +104,9 @@
                     Grid.ColumnSpan="2"
                     Background="WhiteSmoke"
                     DisplayMemberPath="Name"
-                    IsEnabled="{Binding CanOperation.Value, Mode=OneWay}"
+                    IsEnabled="{Binding CanOperation, Mode=OneWay}"
                     ItemsSource="{Binding Languages}"
-                    SelectedItem="{Binding SelectedLanguage.Value, Mode=OneWayToSource}" />
+                    SelectedItem="{Binding SelectedLanguage, Mode=OneWayToSource}" />
             </Grid>
         </GroupBox>
 
@@ -121,13 +121,13 @@
                 <ProgressBar
                     Grid.Column="0"
                     Height="15"
-                    Maximum="{Binding MaxSteps.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    Value="{Binding CurrentStep.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Maximum="{Binding MaxSteps, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Value="{Binding CurrentStep, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <ProgressBar
                     Height="15"
-                    Maximum="{Binding MaxStepsSub.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    Value="{Binding CurrentStepSub.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Maximum="{Binding MaxStepsSub, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Value="{Binding CurrentStepSub, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
             <Button
@@ -140,7 +140,7 @@
                 Grid.Column="2"
                 Margin="3"
                 Content="Close"
-                IsEnabled="{Binding CanOperation.Value, Mode=OneWay}">
+                IsEnabled="{Binding CanOperation, Mode=OneWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:CallMethodAction MethodName="Close" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Mode=OneTime}" />

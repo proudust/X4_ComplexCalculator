@@ -21,7 +21,7 @@ class DataExportModel
     /// <summary>
     /// 言語一覧を更新
     /// </summary>
-    public (bool success, IEnumerable<LangComboboxItem> languages) GetLanguages(string inDirPath)
+    public (bool success, LangComboboxItem[] languages) GetLanguages(string inDirPath)
     {
         try
         {
@@ -29,13 +29,14 @@ class DataExportModel
             var xml = catFiles.OpenXml("libraries/languages.xml");
             var languages = xml.XPathSelectElements("/languages/language")
                 .Select(x => new LangComboboxItem(int.Parse(x.Attribute("id").Value), x.Attribute("name").Value))
-                .OrderBy(x => x.ID);
+                .OrderBy(x => x.ID)
+                .ToArray();
 
             return (true, languages);
         }
         catch (Exception)
         {
-            return (false, Enumerable.Empty<LangComboboxItem>());
+            return (false, Array.Empty<LangComboboxItem>());
         }
     }
 
@@ -49,7 +50,7 @@ class DataExportModel
     /// <param name="owner">親ウィンドウハンドル(メッセージボックス表示用)</param>
     /// <returns>現在数と合計数のタプルのイテレータ</returns>
     public void Export(
-        IProgress<(int currentStep, int maxSteps)> progress, 
+        IProgress<(int currentStep, int maxSteps)> progress,
         IProgress<(int currentStep, int maxSteps)> progressSub,
         string inDirPath,
         string outFilePath,
@@ -79,7 +80,7 @@ class DataExportModel
             var waresXml = catFile.OpenXml("libraries/wares.xml");
             RemoveDuplicateWares(waresXml);
             //var mapXml = catFile.OpenXml("libraries/mapdefaults.xml");
-            
+
 
             IExporter[] exporters =
             {

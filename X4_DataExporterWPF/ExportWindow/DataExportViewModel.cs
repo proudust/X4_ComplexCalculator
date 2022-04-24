@@ -1,14 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
-using Reactive.Bindings.Notifiers;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -17,7 +13,7 @@ namespace X4_DataExporterWPF.DataExportWindow;
 /// <summary>
 /// データ抽出処理用ViewModel
 /// </summary>
-class DataExportViewModel : ObservableObject
+sealed partial class DataExportViewModel : ObservableObject
 {
     #region メンバ
     /// <summary>
@@ -30,85 +26,78 @@ class DataExportViewModel : ObservableObject
     /// </summary>
     private readonly string _OutFilePath;
 
+    /// <summary>
+    /// 入力元フォルダパス
+    /// </summary>
+    [ObservableProperty]
+    [AlsoNotifyChangeFor(nameof(CanExport))]
+    [AlsoNotifyCanExecuteFor(nameof(ExportCommand))]
+    private string _InDirPath;
 
     /// <summary>
     /// 現在の入力元フォルダパスから言語一覧を取得できなかった場合 true
     /// </summary>
-    private readonly ReactivePropertySlim<bool> _UnableToGetLanguages;
-
+    [ObservableProperty]
+    private bool _IsUnableToGetLanguages = false;
 
     /// <summary>
-    /// 処理状態管理
+    /// 言語一覧
     /// </summary>
-    private readonly BusyNotifier _BusyNotifier = new();
+    [ObservableProperty]
+    private LangComboboxItem[] _Languages = Array.Empty<LangComboboxItem>();
+
+    /// <summary>
+    /// 選択された言語
+    /// </summary>
+    [ObservableProperty]
+    [AlsoNotifyChangeFor(nameof(CanExport))]
+    [AlsoNotifyCanExecuteFor(nameof(ExportCommand))]
+    private LangComboboxItem? _SelectedLanguage;
+
+    /// <summary>
+    /// 進捗最大
+    /// </summary>
+    [ObservableProperty]
+    private int _MaxSteps = 1;
+
+    /// <summary>
+    /// 現在の進捗
+    /// </summary>
+    [ObservableProperty]
+    private int _CurrentStep = 0;
+
+    /// <summary>
+    /// 進捗最大(小項目)
+    /// </summary>
+    [ObservableProperty]
+    private int _MaxStepsSub = 1;
+
+    /// <summary>
+    /// 現在の進捗(小項目)
+    /// </summary>
+    [ObservableProperty]
+    private int _CurrentStepSub = 0;
+
+    /// <summary>
+    /// ユーザが操作可能か
+    /// </summary>
+    [ObservableProperty]
+    [AlsoNotifyChangeFor(nameof(CanExport))]
+    [AlsoNotifyCanExecuteFor(nameof(SelectInDirCommand))]
+    [AlsoNotifyCanExecuteFor(nameof(ExportCommand))]
+    [AlsoNotifyCanExecuteFor(nameof(ClosingCommand))]
+    private bool _CanOperation = false;
     #endregion
 
 
     #region プロパティ
     /// <summary>
-    /// 入力元フォルダパス
+    /// エクスポート実行可能か
+    /// 操作可能かつ入力項目に不備がない場合に true にする
     /// </summary>
-    public ReactiveProperty<string> InDirPath { get; }
-
-
-    /// <summary>
-    /// 言語一覧
-    /// </summary>
-    public ReactiveCollection<LangComboboxItem> Languages { get; }
-
-
-    /// <summary>
-    /// 選択された言語
-    /// </summary>
-    public ReactivePropertySlim<LangComboboxItem?> SelectedLanguage { get; }
-
-
-    /// <summary>
-    /// 進捗最大
-    /// </summary>
-    public ReactivePropertySlim<int> MaxSteps { get; } = new(1);
-
-
-    /// <summary>
-    /// 現在の進捗
-    /// </summary>
-    public ReactivePropertySlim<int> CurrentStep { get; } = new(0);
-
-
-    /// <summary>
-    /// 進捗最大(小項目)
-    /// </summary>
-    public ReactivePropertySlim<int> MaxStepsSub { get; } = new(1);
-
-
-    /// <summary>
-    /// 現在の進捗(小項目)
-    /// </summary>
-    public ReactivePropertySlim<int> CurrentStepSub { get; } = new(0);
-
-
-    /// <summary>
-    /// ユーザが操作可能か
-    /// </summary>
-    public ReadOnlyReactivePropertySlim<bool> CanOperation { get; }
-
-
-    /// <summary>
-    /// 入力元フォルダ参照
-    /// </summary>
-    public ReactiveCommand SelectInDirCommand { get; }
-
-
-    /// <summary>
-    /// 抽出実行
-    /// </summary>
-    public AsyncReactiveCommand ExportCommand { get; }
-
-
-    /// <summary>
-    /// ウィンドウを閉じる
-    /// </summary>
-    public ReactiveCommand<CancelEventArgs> ClosingCommand { get; }
+    public bool CanExport => CanOperation
+            && !string.IsNullOrEmpty(InDirPath)
+            && SelectedLanguage is not null;
     #endregion
 
 
@@ -117,64 +106,51 @@ class DataExportViewModel : ObservableObject
     /// </summary>
     public DataExportViewModel(string inDirPath, string outFilePath)
     {
-        InDirPath = new ReactiveProperty<string>(inDirPath,
-            mode: ReactivePropertyMode.RaiseLatestValueOnSubscribe);
-        _UnableToGetLanguages = new ReactivePropertySlim<bool>(false);
-        InDirPath.SetValidateNotifyError(
-            _ => _UnableToGetLanguages.Select(isError => isError ? "Error" : null));
         _OutFilePath = outFilePath;
+        _InDirPath = inDirPath;
 
-        Languages = new ReactiveCollection<LangComboboxItem>();
-        SelectedLanguage = new ReactivePropertySlim<LangComboboxItem?>();
+        OnInDirPathChanged(InDirPath);
+    }
 
-        CanOperation = _BusyNotifier.Inverse().ToReadOnlyReactivePropertySlim();
 
-        // 操作可能かつ入力項目に不備がない場合に true にする
-        var canExport = new[]{
-            CanOperation,
-            InDirPath.Select(p => !string.IsNullOrEmpty(p)),
-            SelectedLanguage.Select(l => l != null),
-        }.CombineLatestValuesAreAllTrue();
-
-        SelectInDirCommand = new ReactiveCommand(CanOperation).WithSubscribe(SelectInDir);
-        ExportCommand = new AsyncReactiveCommand(canExport).WithSubscribe(Export);
-        ClosingCommand = new ReactiveCommand<CancelEventArgs>().WithSubscribe(Closing);
-
-        // 入力元フォルダパスに値が代入された時、言語一覧を更新する
-        InDirPath.ObserveOn(ThreadPoolScheduler.Instance).Subscribe(path =>
+    partial void OnInDirPathChanged(string value)
+    {
+        try
         {
-            using var _ = _BusyNotifier.ProcessStart();
-            _UnableToGetLanguages.Value = false;
-            Languages.ClearOnScheduler();
+            CanOperation = false;
+            IsUnableToGetLanguages = false;
 
-            var (success, languages) = _Model.GetLanguages(path);
-            _UnableToGetLanguages.Value = !success;
-            Languages.AddRangeOnScheduler(languages);
-        });
+            (IsUnableToGetLanguages, Languages) = _Model.GetLanguages(value);
+        }
+        finally
+        {
+            CanOperation = true;
+        }
     }
 
 
     /// <summary>
     /// 入力元フォルダを選択
     /// </summary>
+    [ICommand(CanExecute = nameof(CanOperation))]
     private void SelectInDir()
     {
         var dlg = new CommonOpenFileDialog();
         dlg.IsFolderPicker = true;
         dlg.AllowNonFileSystemItems = false;
 
-        if (Directory.Exists(InDirPath.Value))
+        if (Directory.Exists(InDirPath))
         {
-            dlg.InitialDirectory = InDirPath.Value;
+            dlg.InitialDirectory = InDirPath;
         }
         else
         {
-            dlg.InitialDirectory = Path.GetDirectoryName(InDirPath.Value);
+            dlg.InitialDirectory = Path.GetDirectoryName(InDirPath);
         }
 
         if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
         {
-            InDirPath.Value = dlg.FileName;
+            InDirPath = dlg.FileName;
         }
     }
 
@@ -182,45 +158,53 @@ class DataExportViewModel : ObservableObject
     /// <summary>
     /// データ抽出実行
     /// </summary>
+    [ICommand(CanExecute = nameof(CanExport))]
     private async Task Export()
     {
-        using var _ = _BusyNotifier.ProcessStart();
-
-        // 言語が未選択なら何もしない
-        if (SelectedLanguage.Value == null)
+        try
         {
-            return;
+            CanOperation = false;
+
+            // 言語が未選択なら何もしない
+            if (SelectedLanguage is null)
+            {
+                return;
+            }
+
+            var owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+
+            var progress = new Progress<(int currentStep, int maxSteps)>(s =>
+            {
+                CurrentStep = s.currentStep;
+                MaxSteps = s.maxSteps;
+            });
+
+            var progressSub = new Progress<(int currentStep, int maxSteps)>(s =>
+            {
+                CurrentStepSub = s.currentStep;
+                MaxStepsSub = s.maxSteps;
+            });
+
+            await Task.Run(() => _Model.Export(
+                progress,
+                progressSub,
+                InDirPath,
+                _OutFilePath,
+                SelectedLanguage,
+                owner
+            ));
+            CurrentStep = 0;
         }
-
-        var owner = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-
-        var progress = new Progress<(int currentStep, int maxSteps)>(s =>
+        finally
         {
-            CurrentStep.Value = s.currentStep;
-            MaxSteps.Value = s.maxSteps;
-        });
-
-        var progressSub = new Progress<(int currentStep, int maxSteps)>(s =>
-        {
-            CurrentStepSub.Value = s.currentStep;
-            MaxStepsSub.Value = s.maxSteps;
-        });
-
-        await Task.Run(() => _Model.Export(
-            progress,
-            progressSub,
-            InDirPath.Value,
-            _OutFilePath,
-            SelectedLanguage.Value,
-            owner
-        ));
-        CurrentStep.Value = 0;
+            CanOperation = true;
+        }
     }
 
 
     /// <summary>
     /// ウィンドウを閉じる
     /// </summary>
-    /// <param name="e"></param>
-    private void Closing(CancelEventArgs e) => e.Cancel = _BusyNotifier.IsBusy;
+    [ICommand(CanExecute = nameof(CanOperation))]
+    private void Closing(CancelEventArgs e) => e.Cancel = !CanOperation;
 }
