@@ -1,5 +1,4 @@
-﻿using Prism.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -27,7 +26,7 @@ public class EmpireOverviewWindowModel : IDisposable
     /// <summary>
     /// 製品記憶用ディクショナリ
     /// </summary>
-    private readonly ListDictionary<IList<ProductsGridItem>, ProductsGridItem> _ProductsBak = new();
+    private readonly Dictionary<IList<ProductsGridItem>, IList<ProductsGridItem>> _ProductsBak = new();
     #endregion
 
 
@@ -87,7 +86,7 @@ public class EmpireOverviewWindowModel : IDisposable
                 item.CollectionPropertyChanged -= Products_CollectionPropertyChanged;
 
                 // 削除された製品の生産/消費量を減算する
-                foreach (var removedItem in _ProductsBak[item])
+                foreach (var removedItem in GetProductsBackup(item))
                 {
                     Products.First(x => x.Ware.ID == removedItem.Ware.ID).Count -= removedItem.Count;
                 }
@@ -177,7 +176,7 @@ public class EmpireOverviewWindowModel : IDisposable
             var added = new List<ProductsGridItem>();
             var removed = new List<ProductsGridItem>();
 
-            foreach (var prod in _ProductsBak[products])
+            foreach (var prod in GetProductsBackup(products))
             {
                 if (products.Any(x => x.Ware.ID == prod.Ware.ID))
                 {
@@ -201,7 +200,7 @@ public class EmpireOverviewWindowModel : IDisposable
     /// <param name="removedItems"></param>
     private void OnProductsRemoved(IList<ProductsGridItem> parent, IEnumerable<ProductsGridItem> removedItems)
     {
-        var prodBak = _ProductsBak[parent];
+        var prodBak = GetProductsBackup(parent);
 
         // 削除された製品の生産/消費量を減算する
         foreach (var removedItem in removedItems)
@@ -228,7 +227,7 @@ public class EmpireOverviewWindowModel : IDisposable
     private void OnProductsAdded(IList<ProductsGridItem> parent, IEnumerable<ProductsGridItem> addedItems)
     {
         var addTarget = new List<EmpireOverViewProductsGridItem>();     // 追加対象
-        var prodBak = _ProductsBak[parent];
+        var prodBak = GetProductsBackup(parent);
 
         foreach (var addedItem in addedItems)
         {
@@ -252,5 +251,16 @@ public class EmpireOverviewWindowModel : IDisposable
 
         // 追加対象の要素を一気に追加する
         Products.AddRange(addTarget);
+    }
+
+
+    IList<ProductsGridItem> GetProductsBackup(IList<ProductsGridItem> key)
+    {
+        if (!_ProductsBak.TryGetValue(key, out var value))
+        {
+            value = new List<ProductsGridItem>();
+            _ProductsBak.Add(key, value);
+        }
+        return value;
     }
 }
