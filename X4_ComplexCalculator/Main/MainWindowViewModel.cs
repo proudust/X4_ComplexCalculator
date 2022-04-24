@@ -1,8 +1,7 @@
 ﻿using AvalonDock;
-using GongSolutions.Wpf.DragDrop;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Reactive.Bindings;
+using CommunityToolkit.Mvvm.Input;
+using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,7 +31,7 @@ namespace X4_ComplexCalculator.Main;
 /// <summary>
 /// メイン画面のViewModel
 /// </summary>
-class MainWindowViewModel : ObservableObject, IDropTarget
+sealed partial class MainWindowViewModel : ObservableObject, IDropTarget
 {
     #region メンバ
     /// <summary>
@@ -86,26 +85,9 @@ class MainWindowViewModel : ObservableObject, IDropTarget
 
     #region プロパティ
     /// <summary>
-    /// Windowがロードされた時
-    /// </summary>
-    public ICommand WindowLoadedCommand { get; }
-
-    /// <summary>
-    /// Windowが閉じられる時
-    /// </summary>
-    public ICommand WindowClosingCommand { get; }
-
-
-    /// <summary>
     /// レイアウト保存
     /// </summary>
     public ICommand SaveLayout { get; }
-
-
-    /// <summary>
-    /// 新規作成
-    /// </summary>
-    public ICommand CreateNewCommand { get; }
 
 
     /// <summary>
@@ -121,63 +103,9 @@ class MainWindowViewModel : ObservableObject, IDropTarget
 
 
     /// <summary>
-    /// 開く
-    /// </summary>
-    public ICommand OpenCommand { get; }
-
-
-    /// <summary>
-    /// 帝国の概要ウィンドウを開く
-    /// </summary>
-    public ICommand OpenEmpireOverviewWindowCommand { get; }
-
-
-    /// <summary>
-    /// DBビュワーウィンドウを開く
-    /// </summary>
-    public ICommand OpenDBViewerWindowCommand { get; }
-
-
-    /// <summary>
     /// DB更新
     /// </summary>
     public ICommand UpdateDBCommand { get; }
-
-
-    /// <summary>
-    /// 問題を報告
-    /// </summary>
-    public ICommand ReportIssueCommand { get; }
-
-
-    /// <summary>
-    /// 起動時に更新を確認するかのチェック状態
-    /// </summary>
-    public ReactiveProperty<bool> CheckUpdateAtLaunch { get; }
-
-
-    /// <summary>
-    /// 起動時に更新を確認するか
-    /// </summary>
-    public ICommand SetCheckUpdateAtLaunchCommand { get; }
-
-
-    /// <summary>
-    /// 更新を確認...
-    /// </summary>
-    public AsyncReactiveCommand<bool> CheckUpdateCommand { get; }
-
-
-    /// <summary>
-    /// バージョン情報
-    /// </summary>
-    public ICommand VersionInfoCommand { get; }
-
-
-    /// <summary>
-    /// タブが閉じられる時
-    /// </summary>
-    public ICommand DocumentClosingCommand { get; }
 
 
     /// <summary>
@@ -244,24 +172,12 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// </summary>
     public MainWindowViewModel()
     {
-        _WorkAreaFileIO                  = new WorkAreaFileIO(_WorkAreaManager);
-        _MainWindowModel                 = new MainWindowModel(_WorkAreaManager, _WorkAreaFileIO);
-        WindowLoadedCommand              = new RelayCommand(WindowLoaded);
-        WindowClosingCommand             = new RelayCommand<CancelEventArgs>(WindowClosing);
-        CreateNewCommand                 = new RelayCommand(CreateNew);
-        SaveLayout                       = new RelayCommand(_WorkAreaManager.SaveLayout);
-        SaveCommand                      = new RelayCommand(_WorkAreaFileIO.Save);
-        SaveAsCommand                    = new RelayCommand(_WorkAreaFileIO.SaveAs);
-        OpenCommand                      = new RelayCommand(Open);
-        UpdateDBCommand                  = new RelayCommand(_MainWindowModel.UpdateDB);
-        ReportIssueCommand               = new RelayCommand(ReportIssue);
-        CheckUpdateAtLaunch              = new ReactiveProperty<bool>(Configuration.Instance.CheckUpdateAtLaunch);
-        SetCheckUpdateAtLaunchCommand    = new RelayCommand(SetCheckUpdateAtLaunch);
-        CheckUpdateCommand               = new AsyncReactiveCommand<bool>().WithSubscribe(CheckUpdate);
-        VersionInfoCommand               = new RelayCommand(ShowVersionInfo);
-        DocumentClosingCommand           = new RelayCommand<DocumentClosingEventArgs>(DocumentClosing);
-        OpenEmpireOverviewWindowCommand  = new RelayCommand(OpenEmpireOverviewWindow);
-        OpenDBViewerWindowCommand        = new RelayCommand(OpenDBViewerWindow);
+        _WorkAreaFileIO = new WorkAreaFileIO(_WorkAreaManager);
+        _MainWindowModel = new MainWindowModel(_WorkAreaManager, _WorkAreaFileIO);
+        SaveLayout = new RelayCommand(_WorkAreaManager.SaveLayout);
+        SaveCommand = new RelayCommand(_WorkAreaFileIO.Save);
+        SaveAsCommand = new RelayCommand(_WorkAreaFileIO.SaveAs);
+        UpdateDBCommand = new RelayCommand(_MainWindowModel.UpdateDB);
         _WorkAreaFileIO.PropertyChanged += Member_PropertyChanged;
 
         _ImportExporter = new ImportExporter(_WorkAreaManager);
@@ -374,6 +290,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// 新規作成
     /// </summary>
+    [ICommand]
     private void CreateNew()
     {
         _WorkAreaFileIO.CreateNew();
@@ -384,6 +301,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// 開く
     /// </summary>
+    [ICommand]
     private void Open()
     {
         _WorkAreaFileIO.Open();
@@ -394,6 +312,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// 問題を報告
     /// </summary>
+    [ICommand]
     private void ReportIssue()
     {
         const string url = ThisAssembly.Git.RepositoryUrl + "/issues";
@@ -404,16 +323,17 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// 更新確認ON/OFF
     /// </summary>
+    [ICommand]
     private void SetCheckUpdateAtLaunch()
     {
         Configuration.Instance.CheckUpdateAtLaunch = !Configuration.Instance.CheckUpdateAtLaunch;
-        CheckUpdateAtLaunch.Value = Configuration.Instance.CheckUpdateAtLaunch;
     }
 
 
     /// <summary>
     /// 更新を確認...
     /// </summary>
+    [ICommand]
     private async Task CheckUpdate(bool isUserOperation = false)
     {
         if (_ApplicationUpdater.FinishedDownload && isUserOperation)
@@ -473,6 +393,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// バージョン情報
     /// </summary>
+    [ICommand]
     private void ShowVersionInfo()
     {
         const string version = VersionInfo.DetailVersion;
@@ -489,6 +410,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// ウィンドウがロードされた時
     /// </summary>
+    [ICommand]
     private void WindowLoaded()
     {
         try
@@ -514,6 +436,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// ウィンドウが閉じられる時
     /// </summary>
+    [ICommand]
     private void WindowClosing(CancelEventArgs e)
     {
         e.Cancel = _MainWindowModel.WindowClosing();
@@ -536,6 +459,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// タブが閉じられる時
     /// </summary>
     /// <param name="e"></param>
+    [ICommand]
     private void DocumentClosing(DocumentClosingEventArgs e)
     {
         if (e.Document.Content is WorkAreaViewModel WorkArea)
@@ -548,6 +472,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// 帝国の概要ウィンドウを開く
     /// </summary>
+    [ICommand]
     private void OpenEmpireOverviewWindow()
     {
         if (_EmpireOverviewWindow is null)
@@ -564,6 +489,7 @@ class MainWindowViewModel : ObservableObject, IDropTarget
     /// <summary>
     /// DBビュワーウィンドウを開く
     /// </summary>
+    [ICommand]
     private void OpenDBViewerWindow()
     {
         if (_DBViewerWindow is null)
