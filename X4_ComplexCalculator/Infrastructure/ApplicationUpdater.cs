@@ -17,7 +17,7 @@ public class ApplicationUpdater
     /// <summary>
     /// 参照する GitHub のリポジトリのオーナー名
     /// </summary>
-    private const string REPO_OWNER = "Ocelot1210";
+    private const string REPO_OWNER = "proudust";
 
 
     /// <summary>
